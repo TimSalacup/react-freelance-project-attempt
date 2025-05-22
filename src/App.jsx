@@ -1,15 +1,10 @@
 import "./App.css";
-import fillerLogo from "./assets/fillerLogo.png";
+import Nav from "./components/Nav"
 
 function App() {
   return (
     <>
-      <nav>
-        <div className="nav__top">
-          <img src={fillerLogo} alt="cvs logo" />
-          
-        </div>
-      </nav>
+      <Nav />
     </>
   );
 }
