@@ -1,10 +1,11 @@
-const NavBottomLink = ({ text, leftLine }) => {
+const NavBottomLink = ({ text }) => {
   return (
     <>
-      <div className={leftLine}></div>
-      <a href="" className="nav__bottom--link">
-        {text}
-      </a>
+      <div className="nav__bottom--link--container">
+        <a href="" className="nav__bottom--link">
+          {text}
+        </a>
+      </div>
     </>
   );
 };
