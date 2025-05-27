@@ -7,16 +7,20 @@ import {
   faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 import NavContact from "./subComponents/NavContact";
-import NavBottomLink from "./subComponents/NavBottomLink";
 
-const Nav = ({ toggleBottomNav }) => {
+const Nav = ({
+  toggleBottomNav,
+  bottomNavRef,
+  openBottomNavRef,
+  navBottomLinksRef,
+  bottomNavComponents
+}) => {
   const phoneIcon = (
     <FontAwesomeIcon icon={faPhone} className="nav__top--icon" />
   );
   const envelopeIcon = (
     <FontAwesomeIcon icon={faEnvelope} className="nav__top--icon" />
   );
-
 
   return (
     <>
@@ -42,13 +46,10 @@ const Nav = ({ toggleBottomNav }) => {
             </div>
           </div>
         </div>
-        <div className="nav__bottom">
+        <div className="nav__bottom" ref={bottomNavRef}>
           <div className="nav__bottom--wrapper">
-            <div className="nav__bottom--links">
-              <NavBottomLink text="About us" />
-              <NavBottomLink text="Our Services" />
-              <NavBottomLink text="Sample link" />
-              <NavBottomLink text="Sample link 2" />
+            <div className="nav__bottom--links" ref={navBottomLinksRef}>
+              {bottomNavComponents}
             </div>
             <FontAwesomeIcon
               icon={faArrowUp}
@@ -62,6 +63,7 @@ const Nav = ({ toggleBottomNav }) => {
             icon={faArrowDown}
             className="nav__bottom--arrow showNavBottom"
             onClick={() => toggleBottomNav()}
+            ref={openBottomNavRef}
           />
         </div>
       </nav>
