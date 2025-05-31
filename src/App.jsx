@@ -8,9 +8,13 @@ function App() {
   const bottomNavRef = useRef();
   const openBottomNavRef = useRef();
   const navBottomLinkContainerRef = useRef([]);
-  let prevActive = useRef(0);
+  const headerImgRef = useRef([]);
+  let prevActiveNav = useRef(0);
+  let prevActiveHeader = useRef(0);
   const [bottomNavComponents, setBottomNavComponents] = useState([]);
+  const [headerImagesArray, setHeaderImagesArray] = useState([]);
 
+  // OPENS AND CLOSES THE BOTTOM PART OF THE NAV
   const toggleBottomNav = () => {
     bottomNavRef.current.classList.toggle("close");
     setTimeout(() => {
@@ -18,19 +22,27 @@ function App() {
     }, 500);
   };
 
+  // SETS THE "ACTIVE"/HIGHLIGHTED LINK OF THE BOTTOM PART OF THE NAV
   const toggleActive = (j) => {
-    if (j !== prevActive.current) {
+    if (j !== prevActiveNav.current) {
       navBottomLinkContainerRef.current[j].classList.toggle("active");
-      navBottomLinkContainerRef.current[prevActive.current].classList.toggle("active");
-      prevActive.current = j;
+      navBottomLinkContainerRef.current[prevActiveNav.current].classList.toggle(
+        "active"
+      );
+      prevActiveNav.current = j;
     }
   };
 
+  // SETS THE DEFAULT HIGHLIGHTED LINK OF THE BOTTOM PART OF THE NAV
   useEffect(() => {
-    const el = navBottomLinkContainerRef.current[prevActive.current]
-    if (el) navBottomLinkContainerRef.current[prevActive.current].classList.toggle("active");
+    const el = navBottomLinkContainerRef.current[prevActiveNav.current];
+    if (el)
+      navBottomLinkContainerRef.current[prevActiveNav.current].classList.toggle(
+        "active"
+      );
   }, [bottomNavComponents]);
 
+  // MAPS THE BOTTOM NAV LINKS WHEN PAGE MOUNTS
   useEffect(() => {
     setBottomNavComponents(
       NavLinksDetails.map((link, i) => (
@@ -45,6 +57,75 @@ function App() {
       ))
     );
   }, []);
+
+  useEffect(() => {
+    let tempHeaderImages = HeaderImages.map((link, i) => {
+      return (
+        <img
+          src={link}
+          key={i}
+          alt=""
+          className="header__bg--img"
+          ref={(el) => {
+            if (el) headerImgRef.current[i] = el;
+          }}
+        />
+      );
+    });
+    setHeaderImagesArray(tempHeaderImages);
+  }, []);
+
+  const nextImage = () => {
+    if (prevActiveHeader.current + 1 <= headerImagesArray.length - 1) {
+      headerImgRef.current[prevActiveHeader.current].classList.toggle(
+        "visible"
+      );
+      headerImgRef.current[prevActiveHeader.current + 1].classList.toggle(
+        "visible"
+      );
+      ++prevActiveHeader.current;
+    } else {
+      headerImgRef.current[prevActiveHeader.current].classList.toggle(
+        "visible"
+      );
+      prevActiveHeader.current = 0;
+      headerImgRef.current[prevActiveHeader.current].classList.toggle(
+        "visible"
+      );
+    }
+  };
+
+  const previousImage = () => {
+    if (prevActiveHeader.current - 1 >= 0) {
+      headerImgRef.current[prevActiveHeader.current].classList.toggle(
+        "visible"
+      );
+      headerImgRef.current[prevActiveHeader.current - 1].classList.toggle(
+        "visible"
+      );
+      --prevActiveHeader.current;
+    } else {
+      headerImgRef.current[prevActiveHeader.current].classList.toggle(
+        "visible"
+      );
+      prevActiveHeader.current = headerImagesArray.length - 1;
+      headerImgRef.current[prevActiveHeader.current].classList.toggle(
+        "visible"
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (headerImgRef.current[prevActiveHeader.current]) {
+      headerImgRef.current[prevActiveHeader.current].classList.toggle(
+        "visible"
+      );
+    }
+  }, [headerImagesArray]);
+
+  // useEffect(() => {
+  //   console.log(headerImgRef.current[0].classList)
+  // }, [headerImgRef] )
 
   const NavLinksDetails = [
     {
@@ -69,6 +150,13 @@ function App() {
     },
   ];
 
+  const HeaderImages = [
+    "/publicAssets/asset1.jpg",
+    "/publicAssets/asset3.jpg",
+    "/publicAssets/asset5.jpg",
+    "/publicAssets/asset2.jpg",
+  ];
+
   return (
     <>
       <Nav
@@ -79,7 +167,11 @@ function App() {
         navBottomLinkContainerRef={navBottomLinkContainerRef}
         bottomNavComponents={bottomNavComponents}
       />
-      <Header />
+      <Header
+        headerImagesArray={headerImagesArray}
+        nextImage={nextImage}
+        previousImage={previousImage}
+      />
     </>
   );
 }

@@ -3,29 +3,26 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import headerImg from "../assets/asset3.jpg";
 
-const Header = () => {
+const Header = ({headerImagesArray, nextImage, previousImage}) => {
   return (
     <>
       <section>
         <header>
-          <div className="header__arrow header__left">
-            <div className="fader__left"></div>
+          <div className="header__arrow header__left" onClick={() => previousImage()}>
             <FontAwesomeIcon
               icon={faChevronLeft}
               className="header__arrow--left"
             />
           </div>
-          <div className="header__arrow header__right">
-            <div className="fader__right"></div>
+          <div className="header__arrow header__right" onClick={() => nextImage()}>
             <FontAwesomeIcon
               icon={faChevronRight}
               className="header__arrow--right"
             />
           </div>
           <div className="header__bg">
-            <img src={headerImg} alt="" className="header__bg--img" />
+            {headerImagesArray}
           </div>
           <div className="header__bgfilter"></div>
           <div className="header__wrapper">
