@@ -64,11 +64,12 @@ Nav {
 
 .nav__top--icon {
   background-color: rgb(60, 196, 188);
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   border-radius: 50px;
-  padding: 8px;
+  padding: 10px;
   color: white;
+  margin-right: 4px;
 }
 
 .nav__contact {
@@ -83,9 +84,25 @@ Nav {
   margin-left: 16px;
 }
 
+.nav__contact--textContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .nav__contact--text {
+  transition: all 250ms ease;
   font-family: "Roboto Condensed", sans-serif;
   margin-left: 8px;
+  cursor: default;
+}
+
+.nav__contact--text.bottom {
+  transform: translateY(-2px);
+}
+
+.nav__contact--text.top {
+  transform: translateY(2px);
 }
 
 .nav__link {
@@ -209,9 +226,12 @@ Nav {
 
 /* HEADER */
 
-header {
-  height: 85vh;
+.moveDown {
   transform: translateY(72px);
+}
+
+header {
+  height: calc(85vh);
   z-index: 0;
   width: 100vw;
   display: flex;
@@ -227,14 +247,15 @@ header {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: -1;
+  bottom: 0;
 }
 
 .header__bg {
   position: absolute;
   width: 100%;
   height: 100%;
-  transform: translateY(-40%);
   z-index: -1;
+  bottom: 0px;
 }
 
 .header__bg--img {
@@ -243,6 +264,7 @@ header {
   height: auto;
   opacity: 0%;
   transition: all 500ms ease;
+  transform: translateY(-20%);
 }
 
 .visible {
@@ -360,4 +382,72 @@ header {
 
 .header__button--right:hover {
   background: rgba(0, 0, 0, 0.2);
+}
+
+/* MAIN - SECTION1*/
+main {
+  display: flex;
+  max-width: 1000px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section1__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 0 72px 0;
+}
+
+.section1__description {
+  max-width: 500px;
+  text-align: center;
+}
+
+.section1__title {
+  position: relative;
+}
+
+.section1__title::after {
+  content: "";
+  width: 8px;
+  height: 0px;
+  position: absolute;
+  border: 1px solid black;
+  bottom: -10px;
+  left: 50%;
+}
+
+
+.section1__para {
+  margin-top: 16px;
+}
+
+.section1__para::after {
+  
+}
+
+.services {
+  margin-top: 40px;
+  display: flex;
+}
+
+.service {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.service__logo {
+  padding: 20px;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: rgb(73, 255, 243);
+}
+
+.service__title {
+  font-weight: 800;
+  margin: 16px 0 8px 0;
 }

@@ -3,6 +3,7 @@ import "./App.css";
 import Nav from "./mainComponents/Nav";
 import NavBottomLink from "./mainComponents/subComponents/NavBottomLink";
 import Header from "./mainComponents/Header";
+import Section1 from "./mainComponents/Section1";
 
 function App() {
   const bottomNavRef = useRef();
@@ -152,9 +153,9 @@ function App() {
 
   const HeaderImages = [
     "/publicAssets/asset1.jpg",
+    "/publicAssets/asset2.jpg",
     "/publicAssets/asset3.jpg",
     "/publicAssets/asset5.jpg",
-    "/publicAssets/asset2.jpg",
   ];
 
   return (
@@ -167,11 +168,14 @@ function App() {
         navBottomLinkContainerRef={navBottomLinkContainerRef}
         bottomNavComponents={bottomNavComponents}
       />
+      <main className="moveDown">
       <Header
         headerImagesArray={headerImagesArray}
         nextImage={nextImage}
         previousImage={previousImage}
       />
+        <Section1/>
+      </main>
     </>
   );
 }

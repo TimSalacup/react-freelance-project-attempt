@@ -29,7 +29,7 @@ const Nav = ({
           <div className="nav__top--wrapper">
             <img src={NavLogo} alt="cvs logo" className="nav__top--logo" />
             <div className="nav__top--right">
-              <NavContact icon={phoneIcon} text="(+63) 917 703 5047" />
+              <NavContact icon={phoneIcon} text="(+63) 917 703 5047" topText="Call us!" right = ""/>
               <div className="nav__top--splitter"></div>
               <NavContact
                 icon={envelopeIcon}
@@ -42,6 +42,8 @@ const Nav = ({
                     https://m.me/cvsph.sjdm
                   </a>
                 }
+                topText="Message us!"
+                right = "right"
               />
             </div>
           </div>
