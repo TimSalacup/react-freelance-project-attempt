@@ -3,17 +3,25 @@ import "./App.css";
 import Nav from "./mainComponents/Nav";
 import NavBottomLink from "./mainComponents/subComponents/NavBottomLink";
 import Header from "./mainComponents/Header";
-import Section1 from "./mainComponents/Section1";
+import OurServices from "./mainComponents/OurServices";
+import FadeIn from "./mainComponents/subComponents/FadeIn";
+import AboutUs from "./mainComponents/AboutUs";
 
 function App() {
   const bottomNavRef = useRef();
   const openBottomNavRef = useRef();
   const navBottomLinkContainerRef = useRef([]);
   const headerImgRef = useRef([]);
+  const aboutUsButtonsRef = useRef([]);
   let prevActiveNav = useRef(0);
   let prevActiveHeader = useRef(0);
+  let aboutImgRef = useRef([]);
   const [bottomNavComponents, setBottomNavComponents] = useState([]);
   const [headerImagesArray, setHeaderImagesArray] = useState([]);
+  const [aboutUsSections, setAboutUsSections] = useState([]);
+  const [aboutTitle, setAboutTitle] = useState("");
+  const [aboutPara, setAboutPara] = useState("");
+  const [aboutImg, setAboutImg] = useState("");
 
   // OPENS AND CLOSES THE BOTTOM PART OF THE NAV
   const toggleBottomNav = () => {
@@ -43,39 +51,7 @@ function App() {
       );
   }, [bottomNavComponents]);
 
-  // MAPS THE BOTTOM NAV LINKS WHEN PAGE MOUNTS
-  useEffect(() => {
-    setBottomNavComponents(
-      NavLinksDetails.map((link, i) => (
-        <NavBottomLink
-          key={i}
-          text={link.text}
-          toggleActive={() => toggleActive(i)}
-          navBottomLinkContainerRef={(el) => {
-            if (el) navBottomLinkContainerRef.current[i] = el;
-          }}
-        />
-      ))
-    );
-  }, []);
-
-  useEffect(() => {
-    let tempHeaderImages = HeaderImages.map((link, i) => {
-      return (
-        <img
-          src={link}
-          key={i}
-          alt=""
-          className="header__bg--img"
-          ref={(el) => {
-            if (el) headerImgRef.current[i] = el;
-          }}
-        />
-      );
-    });
-    setHeaderImagesArray(tempHeaderImages);
-  }, []);
-
+  // GOES TO THE NEXT HEADER PHOTO
   const nextImage = () => {
     if (prevActiveHeader.current + 1 <= headerImagesArray.length - 1) {
       headerImgRef.current[prevActiveHeader.current].classList.toggle(
@@ -96,6 +72,7 @@ function App() {
     }
   };
 
+  // GOES TO THE PREVIOUS HEADER PHOTO
   const previousImage = () => {
     if (prevActiveHeader.current - 1 >= 0) {
       headerImgRef.current[prevActiveHeader.current].classList.toggle(
@@ -116,6 +93,68 @@ function App() {
     }
   };
 
+  const changeAbout = (i) => {
+    setAboutTitle(AboutUsContentArray[i].title);
+    setAboutPara(AboutUsContentArray[i].paragraph);
+    setAboutImg(AboutUsContentArray[i].img);
+    console.log(aboutUsButtonsRef);
+  };
+
+  useEffect(() => {
+    if (aboutUsButtonsRef) {
+      setAboutTitle(AboutUsContentArray[0].title);
+      setAboutPara(AboutUsContentArray[0].paragraph);
+      setAboutImg(AboutUsContentArray[0].img);
+    }
+  }, [aboutUsButtonsRef]);
+
+  // LOADS THE IMAGES ON THE HEADER & MAPS THE ABOUT US BUTTONS & MAPS BOTTOM NAV BUTTONS
+  useEffect(() => {
+    let tempHeaderImages = HeaderImages.map((link, i) => {
+      return (
+        <img
+          src={link}
+          key={i}
+          alt=""
+          className="header__bg--img"
+          ref={(el) => {
+            if (el) headerImgRef.current[i] = el;
+          }}
+        />
+      );
+    });
+    setHeaderImagesArray(tempHeaderImages);
+    setAboutUsSections(
+      AboutUsSectionsArray.map((name, i) => {
+        return (
+          <div
+            key={i}
+            className="aboutUs__button"
+            ref={(el, i) => {
+              if (el) aboutUsButtonsRef.current[i] = el;
+            }}
+            onClick={() => changeAbout(i)}
+          >
+            <span className="aboutUs__button--text">{name}</span>
+          </div>
+        );
+      })
+    );
+    setBottomNavComponents(
+      NavLinksDetails.map((link, i) => (
+        <NavBottomLink
+          key={i}
+          text={link.text}
+          toggleActive={() => toggleActive(i)}
+          navBottomLinkContainerRef={(el) => {
+            if (el) navBottomLinkContainerRef.current[i] = el;
+          }}
+        />
+      ))
+    );
+  }, []);
+
+  // SETS THE DEFAULT BACKGROUND IMAGE IN THE HEADER
   useEffect(() => {
     if (headerImgRef.current[prevActiveHeader.current]) {
       headerImgRef.current[prevActiveHeader.current].classList.toggle(
@@ -123,10 +162,6 @@ function App() {
       );
     }
   }, [headerImagesArray]);
-
-  // useEffect(() => {
-  //   console.log(headerImgRef.current[0].classList)
-  // }, [headerImgRef] )
 
   const NavLinksDetails = [
     {
@@ -156,6 +191,45 @@ function App() {
     "/publicAssets/asset2.jpg",
     "/publicAssets/asset3.jpg",
     "/publicAssets/asset5.jpg",
+    "/publicAssets/asset9.jpg",
+    "/publicAssets/asset10.jpg",
+    "/publicAssets/asset11.jpg",
+  ];
+
+  const AboutUsSectionsArray = ["TRAINED", "ACCREDITED", "TRUSTED"];
+
+  const AboutUsContentArray = [
+    {
+      title: "TRAINED NURSES AND STAFF",
+      paragraph: (
+        <>
+          We provide Basic Life Support Advance Training for our Nurses and
+          Staff, sponsored by CVS Medical Group, Inc.
+          <br />
+          <br />
+          <i>
+            “We train our people so in the event of unexpected emergency, not
+            only in our facility, but even in our private homes, or wherever a
+            call is needed for us to help our community, we are ready”.
+          </i>
+          <br />
+          <br />- Mr. Tomas Julius G. Salacup, CVS Board Member
+        </>
+      ),
+      img: "/publicAssets/asset7.jpg",
+    },
+    {
+      title: "PHILHEALTH ACCREDITED",
+      paragraph:
+        "CVS Dialysis Center is officially included in PhilHealth's updated list of accredited freestanding dialysis clinics for 2025—reflecting our continued commitment to quality kidney care.",
+      img: "/publicAssets/cvsAccred.png",
+    },
+    {
+      title: "TOGETHER WITH DCPI",
+      paragraph:
+        "CVS Dialysis Center and DCPI ( Dialysis Coalition of the Philippines, Inc.) are in partnership together in making A+ Kidney Healthcare Management",
+      img: "/publicAssets/certificate.jpg",
+    },
   ];
 
   return (
@@ -169,12 +243,21 @@ function App() {
         bottomNavComponents={bottomNavComponents}
       />
       <main className="moveDown">
-      <Header
-        headerImagesArray={headerImagesArray}
-        nextImage={nextImage}
-        previousImage={previousImage}
-      />
-        <Section1/>
+        <Header
+          headerImagesArray={headerImagesArray}
+          nextImage={nextImage}
+          previousImage={previousImage}
+        />
+        <FadeIn>
+          <OurServices />
+        </FadeIn>
+        <AboutUs
+          aboutUsSections={aboutUsSections}
+          aboutTitle={aboutTitle}
+          aboutPara={aboutPara}
+          aboutImg={aboutImg}
+          aboutImgRef={aboutImgRef}
+        />
       </main>
     </>
   );
