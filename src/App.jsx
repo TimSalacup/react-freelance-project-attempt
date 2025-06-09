@@ -6,6 +6,8 @@ import Header from "./mainComponents/Header";
 import OurServices from "./mainComponents/OurServices";
 import FadeIn from "./mainComponents/subComponents/FadeIn";
 import AboutUs from "./mainComponents/AboutUs";
+import Quotes from "./mainComponents/Quotes";
+import Footer from "./mainComponents/Footer";
 
 function App() {
   const bottomNavRef = useRef();
@@ -15,10 +17,11 @@ function App() {
   const aboutUsButtonsRef = useRef([]);
   let prevActiveNav = useRef(0);
   let prevActiveHeader = useRef(0);
-  let aboutImgRef = useRef([]);
+  let prevActiveAbout = useRef(0);
   const [bottomNavComponents, setBottomNavComponents] = useState([]);
   const [headerImagesArray, setHeaderImagesArray] = useState([]);
   const [aboutUsSections, setAboutUsSections] = useState([]);
+  const [isHorizontal, setIsHorizontal] = useState(false);
   const [aboutTitle, setAboutTitle] = useState("");
   const [aboutPara, setAboutPara] = useState("");
   const [aboutImg, setAboutImg] = useState("");
@@ -93,18 +96,34 @@ function App() {
     }
   };
 
+  // CHANGES ABOUT IMAGE
   const changeAbout = (i) => {
-    setAboutTitle(AboutUsContentArray[i].title);
-    setAboutPara(AboutUsContentArray[i].paragraph);
-    setAboutImg(AboutUsContentArray[i].img);
-    console.log(aboutUsButtonsRef);
+    if (prevActiveAbout.current !== i) {
+      setAboutTitle(AboutUsContentArray[i].title);
+      setAboutPara(AboutUsContentArray[i].paragraph);
+      setAboutImg(AboutUsContentArray[i].img);
+      setIsHorizontal(AboutUsContentArray[i].horizontal);
+      aboutUsButtonsRef.current[i].classList.toggle("active");
+      aboutUsButtonsRef.current[prevActiveAbout.current].classList.toggle(
+        "active"
+      );
+      prevActiveAbout.current = i;
+    }
   };
+  // HERE
 
+  // SETS DEFAULT ABOUT US IMAGE & ACTIVE BUTTON
   useEffect(() => {
     if (aboutUsButtonsRef) {
-      setAboutTitle(AboutUsContentArray[0].title);
-      setAboutPara(AboutUsContentArray[0].paragraph);
-      setAboutImg(AboutUsContentArray[0].img);
+      setAboutTitle(AboutUsContentArray[prevActiveAbout.current].title);
+      setAboutPara(AboutUsContentArray[prevActiveAbout.current].paragraph);
+      setAboutImg(AboutUsContentArray[prevActiveAbout.current].img);
+      setIsHorizontal(AboutUsContentArray[prevActiveAbout.current].horizontal);
+      setTimeout(() => {
+        aboutUsButtonsRef.current[prevActiveAbout.current].classList.toggle(
+          "active"
+        );
+      }, 1);
     }
   }, [aboutUsButtonsRef]);
 
@@ -130,7 +149,7 @@ function App() {
           <div
             key={i}
             className="aboutUs__button"
-            ref={(el, i) => {
+            ref={(el) => {
               if (el) aboutUsButtonsRef.current[i] = el;
             }}
             onClick={() => changeAbout(i)}
@@ -140,6 +159,7 @@ function App() {
         );
       })
     );
+
     setBottomNavComponents(
       NavLinksDetails.map((link, i) => (
         <NavBottomLink
@@ -196,7 +216,7 @@ function App() {
     "/publicAssets/asset11.jpg",
   ];
 
-  const AboutUsSectionsArray = ["TRAINED", "ACCREDITED", "TRUSTED"];
+  const AboutUsSectionsArray = ["TRAINED", "ACCREDITED", "WITH DCPI"];
 
   const AboutUsContentArray = [
     {
@@ -217,18 +237,21 @@ function App() {
         </>
       ),
       img: "/publicAssets/asset7.jpg",
+      horizontal: false,
     },
     {
       title: "PHILHEALTH ACCREDITED",
       paragraph:
         "CVS Dialysis Center is officially included in PhilHealth's updated list of accredited freestanding dialysis clinics for 2025—reflecting our continued commitment to quality kidney care.",
       img: "/publicAssets/cvsAccred.png",
+      horizontal: true,
     },
     {
       title: "TOGETHER WITH DCPI",
       paragraph:
-        "CVS Dialysis Center and DCPI ( Dialysis Coalition of the Philippines, Inc.) are in partnership together in making A+ Kidney Healthcare Management",
+        "CVS Dialysis Center and DCPI (Dialysis Coalition of the Philippines, Inc.) are in partnership together in making A+ Kidney Healthcare Management.",
       img: "/publicAssets/certificate.jpg",
+      horizontal: true,
     },
   ];
 
@@ -248,17 +271,19 @@ function App() {
           nextImage={nextImage}
           previousImage={previousImage}
         />
-        <FadeIn>
-          <OurServices />
-        </FadeIn>
         <AboutUs
           aboutUsSections={aboutUsSections}
           aboutTitle={aboutTitle}
           aboutPara={aboutPara}
           aboutImg={aboutImg}
-          aboutImgRef={aboutImgRef}
+          isHorizontal={isHorizontal}
         />
+        <FadeIn>
+          <OurServices />
+        </FadeIn>
+        <Quotes />
       </main>
+        <Footer />
     </>
   );
 }

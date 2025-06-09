@@ -1,6 +1,13 @@
 import AboutUsContent from "./subComponents/AboutUsContent";
+import FadeIn from "./subComponents/FadeIn";
 
-const AboutUs = ({ aboutUsSections, aboutTitle, aboutPara, aboutImg, aboutImgRef }) => {
+const AboutUs = ({
+  aboutUsSections,
+  aboutTitle,
+  aboutPara,
+  aboutImg,
+  isHorizontal,
+}) => {
   return (
     <>
       <div className="section__wrapper aboutUs">
@@ -12,12 +19,23 @@ const AboutUs = ({ aboutUsSections, aboutTitle, aboutPara, aboutImg, aboutImgRef
           />
         </div>
         <div className="aboutUs__bgfilter"></div>
-        <h1 className="section__title aboutUs">ABOUT US</h1>
-              <div className="aboutUs__sections">
-                  <div className="aboutUs__sections--bg"></div>
-                  {aboutUsSections}
-              </div>
-              <AboutUsContent aboutTitle={aboutTitle} aboutPara={aboutPara} aboutImg={aboutImg} />
+        <FadeIn>
+          <h1 className="section__title aboutUs">ABOUT US</h1>
+        </FadeIn>
+        <FadeIn>
+          <div className="aboutUs__sections">
+            <div className="aboutUs__sections--bg"></div>
+            <div className="aboutUs__sections--links">{aboutUsSections}</div>
+          </div>
+        </FadeIn>
+        <FadeIn>
+          <AboutUsContent
+            aboutTitle={aboutTitle}
+            aboutPara={aboutPara}
+            aboutImg={aboutImg}
+            isHorizontal={isHorizontal}
+          />
+        </FadeIn>
       </div>
     </>
   );

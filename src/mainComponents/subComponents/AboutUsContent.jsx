@@ -1,4 +1,4 @@
-const AboutUsContent = ({aboutTitle, aboutPara, aboutImg}) => {
+const AboutUsContent = ({aboutTitle, aboutPara, aboutImg, isHorizontal}) => {
   return (
     <>
       <div className="aboutUsContent__wrapper">
@@ -14,7 +14,7 @@ const AboutUsContent = ({aboutTitle, aboutPara, aboutImg}) => {
           <img
             src={aboutImg || undefined}
             alt=""
-            className="aboutUsContent__right--img"
+            className={`aboutUsContent__right--img ${isHorizontal ? "horizontal" : ""}`}
           />
         </div>
       </div>
