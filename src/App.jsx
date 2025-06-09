@@ -9,6 +9,7 @@ import AboutUs from "./mainComponents/AboutUs";
 import Quotes from "./mainComponents/Quotes";
 import Footer from "./mainComponents/Footer";
 
+
 function App() {
   const bottomNavRef = useRef();
   const openBottomNavRef = useRef();
@@ -169,6 +170,7 @@ function App() {
           navBottomLinkContainerRef={(el) => {
             if (el) navBottomLinkContainerRef.current[i] = el;
           }}
+          link={link.address}
         />
       ))
     );
@@ -185,24 +187,28 @@ function App() {
 
   const NavLinksDetails = [
     {
-      text: "About us",
+      text: "Welcome",
       toggleActive,
       navBottomLinkContainerRef,
+      address: "header",
+    },
+    {
+      text: "About Us",
+      toggleActive,
+      navBottomLinkContainerRef,
+      address: "aboutUs",
     },
     {
       text: "Our Services",
       toggleActive,
       navBottomLinkContainerRef,
+      address: "services",
     },
     {
-      text: "Sample Link",
+      text: "Links",
       toggleActive,
       navBottomLinkContainerRef,
-    },
-    {
-      text: "Sample Link 2",
-      toggleActive,
-      navBottomLinkContainerRef,
+      address: "footer",
     },
   ];
 

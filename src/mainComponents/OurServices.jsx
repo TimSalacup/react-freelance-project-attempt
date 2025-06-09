@@ -4,7 +4,7 @@ import SectionDescription from "./subComponents/SectionDescription.jsx";
 const OurServices = () => {
   return (
     <>
-      <div className="section__wrapper">
+      <div className="section__wrapper" id="services">
         <SectionDescription
           title="OUR SERVICES"
           description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam

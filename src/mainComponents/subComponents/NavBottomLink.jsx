@@ -2,18 +2,19 @@ const NavBottomLink = ({
   text,
   toggleActive,
   navBottomLinkContainerRef,
+  link,
 }) => {
   return (
     <>
       <div
         className="nav__bottom--link--container"
-        onClick={(e) => {
-          e.preventDefault();
+        onClick={() => {
           toggleActive();
+          window.location.hash = link;
         }}
         ref={navBottomLinkContainerRef}
       >
-        <a href="#" className="nav__bottom--link">
+        <a href={`#${link}`} className="nav__bottom--link">
           {text}
         </a>
       </div>

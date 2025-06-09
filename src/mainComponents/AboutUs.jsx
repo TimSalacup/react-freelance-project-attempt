@@ -10,7 +10,7 @@ const AboutUs = ({
 }) => {
   return (
     <>
-      <div className="section__wrapper aboutUs">
+      <div className="section__wrapper aboutUs" id="aboutUs">
         <div className="aboutUs__bg">
           <img
             src="/publicAssets/cvsLogo.png"

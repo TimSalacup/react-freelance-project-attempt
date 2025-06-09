@@ -1,14 +1,18 @@
-import cvsLogo from "../assets/cvsLogo.png"
+import cvsLogo from "../assets/cvsLogo.png";
 
 const Footer = () => {
   return (
     <>
-      <div className="footer__wrapper moveDown">
+      <div className="footer__wrapper moveDown" id="footer">
         <div className="wrapper footer">
           <div className="footer__bg"></div>
-          <ul className="footer__links--list">  
+          <ul className="footer__links--list">
             <li className="footer__link">
-              <a href="" className="footer__link--href">
+              <a
+                href="https://m.me/cvsph.sjdm"
+                target="_blank"
+                className="footer__link--href"
+              >
                 Message us on Facebook Messenger
               </a>
             </li>
@@ -28,11 +32,23 @@ const Footer = () => {
               </a>
             </li>
           </ul>
-              </div>
-              <div className="footer__right">
-                  <img src={cvsLogo} alt="CVS Logo" className="footer__img" />
-                  <i className="footer__quote">"Where care meets value for service"</i>
-              </div>
+          <ul className="footer__links--list">
+            <li className="footer__link">
+              <a
+                href="https://www.facebook.com/cvsph.sjdm"
+                target="_blank"
+                className="footer__link--href"
+              >
+                Visit our Facebook Page
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+        <div className="footer__right">
+          <img src={cvsLogo} alt="CVS Logo" className="footer__img" />
+          <i className="footer__quote">"Where care meets value for service"</i>
+        </div>
       </div>
     </>
   );

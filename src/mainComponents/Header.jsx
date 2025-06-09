@@ -7,7 +7,7 @@ import {
 const Header = ({headerImagesArray, nextImage, previousImage}) => {
   return (
     <>
-      <section>
+      <section id="header">
         <header>
           <div className="header__arrow header__left" onClick={() => previousImage()}>
             <FontAwesomeIcon

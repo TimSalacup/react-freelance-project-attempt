@@ -683,6 +683,10 @@ main {
   position: relative;
 }
 
+.wrapper.footer {
+  display: flex;
+}
+
 .footer__bg {
   position: absolute;
   height: 100%;
@@ -698,6 +702,7 @@ main {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  margin-right: 64px;
 }
 
 .footer__links--list::before{
@@ -719,6 +724,11 @@ main {
   color: rgb(186, 186, 186);
   font-weight: 300;
   font-size: 16px;
+  transition: all 300ms ease;
+}
+
+.footer__link--href:hover {
+  color: rgb(231, 231, 231);
 }
 
 .footer__right {
