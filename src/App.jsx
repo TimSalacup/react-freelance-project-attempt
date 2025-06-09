@@ -27,6 +27,11 @@ function App() {
   const [aboutPara, setAboutPara] = useState("");
   const [aboutImg, setAboutImg] = useState("");
 
+// MAKES SURE THE PAGE REFRESHES AT THE TOP
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
   // OPENS AND CLOSES THE BOTTOM PART OF THE NAV
   const toggleBottomNav = () => {
     bottomNavRef.current.classList.toggle("close");
