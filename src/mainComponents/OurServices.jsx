@@ -7,8 +7,7 @@ const OurServices = () => {
       <div className="section__wrapper" id="services">
         <SectionDescription
           title="OUR SERVICES"
-          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam
-          molestiae aut quis porro, sit itaque!"
+          description="What we do to help kidney patients live a better life:"
         />
         <div className="services">
           <Service />

@@ -7,6 +7,9 @@ const AboutUs = ({
   aboutPara,
   aboutImg,
   isHorizontal,
+  aboutSection,
+  nextTrainedImg,
+  previousTrainedImg,
 }) => {
   return (
     <>
@@ -34,6 +37,9 @@ const AboutUs = ({
             aboutPara={aboutPara}
             aboutImg={aboutImg}
             isHorizontal={isHorizontal}
+            section={aboutSection}
+            nextTrainedImg={nextTrainedImg}
+            previousTrainedImg={previousTrainedImg}
           />
         </FadeIn>
       </div>
