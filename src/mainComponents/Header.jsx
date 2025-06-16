@@ -39,6 +39,7 @@ const Header = ({headerImagesArray, nextImage, previousImage}) => {
                 soluta illo hic nam quae, expedita vitae. Ut autem debitis error
                 recusandae suscipit.
               </div>
+            </div>
               <div className="header__content--buttons">
                 <button className="header__button--left header__button">
                   VIEW OUR SERVICES
@@ -47,7 +48,6 @@ const Header = ({headerImagesArray, nextImage, previousImage}) => {
                   LOREM IPSUM DOLOR SIT.
                 </button>
               </div>
-            </div>
           </div>
         </header>
       </section>

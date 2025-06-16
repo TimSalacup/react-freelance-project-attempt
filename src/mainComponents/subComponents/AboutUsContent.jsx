@@ -14,6 +14,7 @@ const AboutUsContent = ({
   section,
   nextTrainedImg,
   previousTrainedImg,
+  mapPhotoViewerPreviews,
 }) => {
   return (
     <>
@@ -22,7 +23,11 @@ const AboutUsContent = ({
           <h2 className="aboutUsContent__left--title">{aboutTitle}</h2>
           <span className="aboutUsContent__left--para">{aboutPara}</span>
         </div>
-        <Link to="/photoViewer" className="aboutUsContent__right">
+        <Link
+          to="/photoViewer"
+          className="aboutUsContent__right"
+          onClick={() => mapPhotoViewerPreviews()}
+        >
           <img
             src={aboutImg || undefined}
             alt=""

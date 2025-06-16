@@ -354,7 +354,7 @@ header {
 
 .header__content--buttons {
   margin-top: 48px;
-  width: 90%;
+  width: 55%;
   display: flex;
   justify-content: space-between;
 }
@@ -575,7 +575,7 @@ main {
   top: -2px;
   border-radius: 4px;
   background-color: rgb(60, 196, 188);
-  z-index: 0; 
+  z-index: 0;
 }
 
 .aboutUsContent__wrapper {
@@ -621,7 +621,7 @@ main {
   width: 100%;
 }
 
-.aboutUsContent__eye{
+.aboutUsContent__eye {
   z-index: 1;
   font-size: 48px;
   color: black;
@@ -632,11 +632,11 @@ main {
   transition: all 300ms ease;
 }
 
-.aboutUsContent__right:hover .aboutUsContent__eye{
+.aboutUsContent__right:hover .aboutUsContent__eye {
   opacity: 1;
 }
 
-.aboutUsContent__right:hover .aboutUsContent__right--img{
+.aboutUsContent__right:hover .aboutUsContent__right--img {
   transform: scale(110%);
   filter: blur(3px);
 }
@@ -664,7 +664,6 @@ main {
   display: block;
 }
 
-
 .aboutUsContent__arrow:hover {
   background-color: rgb(172, 204, 212);
   background-color: rgb(60, 196, 188);
@@ -673,21 +672,26 @@ main {
 
 /* PHOTO VIEWER */
 
-.photoViewer{
+.photoViewer {
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, .9);
+  background-color: rgba(0, 0, 0, 0.9);
   z-index: 20;
   top: 0px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.photoViewer__close{
+.photoViewer__close {
   position: absolute;
-  right: 32px;
-  top: 16px;
+  left: 32px;
+  top: 24px;
+  color: white;
+  border-radius: 100%;
+  padding: 8px 10px;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .photoViewer__img--container {
@@ -699,6 +703,30 @@ main {
 }
 
 .photoViewer__img {
+  height: 100%;
+}
+
+.photoViewer__previews {
+  width: 100vw;
+  height: 12vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photoViewer__preview {
+  width: 48px;
+  height: 48px;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.photoViewer__preview.selected {
+  border: 3px solid rgb(60, 196, 188);
+}
+
+.photoViewer__preview--img {
+  width: 100%;
   height: 100%;
 }
 
@@ -790,8 +818,8 @@ main {
   margin-right: 64px;
 }
 
-.footer__links--list::before{
-  content:"";
+.footer__links--list::before {
+  content: "";
   width: 24px;
   height: 0;
   border: 1px solid rgb(186, 186, 186);
@@ -834,4 +862,138 @@ main {
 }
 .footer__quote {
   font-weight: 400;
+}
+
+@media (max-width: 1170px) {
+  .header__content--title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 1115px) {
+  .header__bg {
+    display: flex;
+  }
+
+  .header__bg--img {
+    transform: translateY(-10%);
+  }
+}
+
+@media (max-width: 1055px) {
+  .header__content, .header__content--buttons {
+    width: 64%;
+  }
+
+  .header__content--title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .aboutUs__sections {
+    width: 100vw;
+  }
+
+  .aboutUs__sections--bg {
+    display: none;
+  }
+
+  .aboutUs__sections--links {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .aboutUs__button {
+    width: 30%;
+    border-radius: 20px;
+    transition: none;
+  }
+
+  .aboutUs__button::after {
+    border: 2px solid white;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    background-color: white;
+    transform: translateY(2px);
+    border-radius: 20px;
+  }
+
+  .aboutUs__button.active::after {
+    border: 2px solid rgb(60, 196, 188);
+    background-color: rgb(60, 196, 188);
+  }
+
+  .aboutUsContent__wrapper {
+    width: 90vw;
+  }
+
+  .footer__bg {
+    width: 68vw;
+  }
+
+  .footer__right {
+    width: 32vw;
+  }
+}
+
+@media (max-width: 990px) {
+  header {
+    display: flex;
+    flex-direction: column;
+    height: 96vh;
+  }
+
+  .header__arrow {
+    display: none;
+  }
+
+  .header__bgfilter {
+    display: none;
+  }
+
+  .header__bg {
+    position: relative;
+    overflow: hidden;
+    align-items: center;
+  }
+  
+  .header__bg--img {
+    transform: translateY(0%);
+  }
+
+  .header__wrapper {
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 32px 0 48px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .header__content {
+    margin-left: 5vw;
+  }
+
+  .header__content--title {
+    font-size: 28px;
+  }
+
+  .header__content--para {
+    font-size: 14px;
+  }
+
+  .header__content--buttons {
+    flex-direction: column;
+    margin-top: 0;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+  }
+
+  .header__button {
+    margin: 0;
+    width: 60%;
+    height: 48px;
+  }
 }

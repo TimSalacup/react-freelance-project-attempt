@@ -1,5 +1,3 @@
-import cvsLogo from "../assets/cvsLogo.png";
-
 const Footer = () => {
   return (
     <>
@@ -46,7 +44,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer__right">
-          <img src={cvsLogo} alt="CVS Logo" className="footer__img" />
+          <img src="/publicAssets/cvsLogo.png" alt="CVS Logo" className="footer__img" />
           <i className="footer__quote">"Where care meets value for service"</i>
         </div>
       </div>

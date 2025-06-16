@@ -10,6 +10,7 @@ const AboutUs = ({
   aboutSection,
   nextTrainedImg,
   previousTrainedImg,
+  mapPhotoViewerPreviews,
 }) => {
   return (
     <>
@@ -40,6 +41,7 @@ const AboutUs = ({
             section={aboutSection}
             nextTrainedImg={nextTrainedImg}
             previousTrainedImg={previousTrainedImg}
+            mapPhotoViewerPreviews={mapPhotoViewerPreviews}
           />
         </FadeIn>
       </div>

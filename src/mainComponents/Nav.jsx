@@ -1,4 +1,3 @@
-import NavLogo from "../assets/cvsLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPhone,
@@ -27,7 +26,7 @@ const Nav = ({
       <nav>
         <div className="nav__top">
           <div className="nav__top--wrapper">
-            <img src={NavLogo} alt="cvs logo" className="nav__top--logo" />
+            <img src="/publicAssets/cvsLogo.png" alt="cvs logo" className="nav__top--logo" />
             <div className="nav__top--right">
               <NavContact icon={phoneIcon} text="(+63) 917 703 5047" topText="Call us!" right = ""/>
               <div className="nav__top--splitter"></div>
