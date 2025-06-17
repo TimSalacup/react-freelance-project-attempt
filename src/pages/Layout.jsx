@@ -26,6 +26,11 @@ const Layout = ({
   nextTrainedImg,
   previousTrainedImg,
   mapPhotoViewerPreviews,
+  menuButtonRef,
+  toggleMenu,
+  closeMenuButtonRef,
+  menuRef,
+  headerBgRef,
 }) => {
   return (
     <>
@@ -36,12 +41,17 @@ const Layout = ({
         openBottomNavRef={openBottomNavRef}
         navBottomLinkContainerRef={navBottomLinkContainerRef}
         bottomNavComponents={bottomNavComponents}
+        menuButtonRef={menuButtonRef}
+        toggleMenu={toggleMenu}
+        closeMenuButtonRef={closeMenuButtonRef}
+        menuRef={menuRef}
       />
       <main className="moveDown">
         <Header
           headerImagesArray={headerImagesArray}
           nextImage={nextImage}
           previousImage={previousImage}
+          headerBgRef={headerBgRef}
         />
         <AboutUs
           aboutUsSections={aboutUsSections}

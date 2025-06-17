@@ -4,24 +4,35 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Header = ({headerImagesArray, nextImage, previousImage}) => {
+const Header = ({
+  headerImagesArray,
+  nextImage,
+  previousImage,
+  headerBgRef,
+}) => {
   return (
     <>
       <section id="header">
         <header>
-          <div className="header__arrow header__left" onClick={() => previousImage()}>
+          <div
+            className="header__arrow header__left"
+            onClick={() => previousImage()}
+          >
             <FontAwesomeIcon
               icon={faChevronLeft}
               className="header__arrow--left"
             />
           </div>
-          <div className="header__arrow header__right" onClick={() => nextImage()}>
+          <div
+            className="header__arrow header__right"
+            onClick={() => nextImage()}
+          >
             <FontAwesomeIcon
               icon={faChevronRight}
               className="header__arrow--right"
             />
           </div>
-          <div className="header__bg">
+          <div ref={headerBgRef} className="header__bg">
             {headerImagesArray}
           </div>
           <div className="header__bgfilter"></div>
@@ -40,14 +51,14 @@ const Header = ({headerImagesArray, nextImage, previousImage}) => {
                 recusandae suscipit.
               </div>
             </div>
-              <div className="header__content--buttons">
-                <button className="header__button--left header__button">
-                  VIEW OUR SERVICES
-                </button>
-                <button className="header__button--right header__button">
-                  LOREM IPSUM DOLOR SIT.
-                </button>
-              </div>
+            <div className="header__content--buttons">
+              <button className="header__button--left header__button">
+                VIEW OUR SERVICES
+              </button>
+              <button className="header__button--right header__button">
+                LOREM IPSUM DOLOR SIT.
+              </button>
+            </div>
           </div>
         </header>
       </section>

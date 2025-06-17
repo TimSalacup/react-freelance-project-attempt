@@ -9,6 +9,10 @@ function App() {
   const location = useLocation();
   const bottomNavRef = useRef();
   const openBottomNavRef = useRef();
+  const menuButtonRef = useRef();
+  const closeMenuButtonRef = useRef();
+  const menuRef = useRef();
+  const headerBgRef = useRef();
   const navBottomLinkContainerRef = useRef([]);
   const headerImgRef = useRef([]);
   const aboutUsButtonsRef = useRef([]);
@@ -18,11 +22,15 @@ function App() {
   let prevActiveHeader = useRef(0);
   let prevActiveAbout = useRef(0);
   let currentAbout = useRef([]);
+  let startX = useRef(0);
+  let endX = useRef(0);
+  let diffX = useRef(0);
   const [bottomNavComponents, setBottomNavComponents] = useState([]);
   const [headerImagesArray, setHeaderImagesArray] = useState([]);
   const [aboutUsSections, setAboutUsSections] = useState([]);
   const [photoViewerPreviews, setPhotoViewerPreviews] = useState([]);
   const [isHorizontal, setIsHorizontal] = useState(false);
+  const [menuOpened, setMenuOpened] = useState(false);
   const [aboutTitle, setAboutTitle] = useState("");
   const [aboutPara, setAboutPara] = useState("");
   const [aboutImg, setAboutImg] = useState("");
@@ -98,6 +106,26 @@ function App() {
     },
   ];
 
+  // TOGGLES THE VISIBILITY OF THE MENU BUTTONS & MENU
+  const toggleMenu = () => {
+    if (!menuOpened) {
+      menuButtonRef.current.classList.toggle("invisible");
+      menuRef.current.classList.toggle("menu__open");
+      setTimeout(() => {
+        closeMenuButtonRef.current.classList.toggle("invisible");
+        setMenuOpened(true);
+      }, 310);
+    } else {
+      closeMenuButtonRef.current.classList.toggle("invisible");
+      menuRef.current.classList.toggle("menu__open");
+      setTimeout(() => {
+        setMenuOpened(false);
+        menuButtonRef.current.classList.toggle("invisible");
+      }, 310);
+    }
+  };
+
+  // SCROLLS TO ABOUT AFTER COMING OUT FROM PHOTOVIEWER
   useEffect(() => {
     setTimeout(() => {
       if (location.hash) {
@@ -202,7 +230,7 @@ function App() {
 
   // GOES TO THE NEXT HEADER PHOTO
   const nextImage = () => {
-    if (prevActiveHeader.current + 1 <= headerImagesArray.length - 1) {
+    if (prevActiveHeader.current + 1 <= HeaderImages.length - 1) {
       headerImgRef.current[prevActiveHeader.current].classList.toggle(
         "visible"
       );
@@ -235,10 +263,25 @@ function App() {
       headerImgRef.current[prevActiveHeader.current].classList.toggle(
         "visible"
       );
-      prevActiveHeader.current = headerImagesArray.length - 1;
+      prevActiveHeader.current = HeaderImages.length - 1;
       headerImgRef.current[prevActiveHeader.current].classList.toggle(
         "visible"
       );
+    }
+  };
+
+  // HEADER - HORIZONTAL SCROLL SLIDESHOW
+  const headerTouchStart = (e) => {
+    startX.current = e.touches[0].clientX;
+  };
+
+  const headerTouchEnd = (e) => {
+    endX.current = e.changedTouches[0].clientX;
+    diffX.current = Math.ceil(startX.current - endX.current);
+    if (diffX.current > 30) {
+      nextImage();
+    } else if (diffX.current < -60) {
+      previousImage();
     }
   };
 
@@ -273,8 +316,14 @@ function App() {
     }
   }, [aboutUsButtonsRef]);
 
-  // LOADS THE IMAGES ON THE HEADER & MAPS THE ABOUT US BUTTONS & MAPS BOTTOM NAV BUTTONS
+  // RUNS WHEN THE PAGE FIRST LOADS:
+  // 1) LOADS THE IMAGES ON THE HEADER
+  // 2) MAPS THE ABOUT US BUTTONS
+  // 3) MAPS BOTTOM NAV BUTTONS
+  // 4) ADDS EVENT LISTENER TO HEADER BG REF
   useEffect(() => {
+    headerBgRef.current.addEventListener("touchstart", headerTouchStart);
+    headerBgRef.current.addEventListener("touchend", headerTouchEnd);
     let tempHeaderImages = HeaderImages.map((link, i) => {
       return (
         <img
@@ -418,6 +467,11 @@ function App() {
               AboutTrainedImgs={AboutUsImgs.AboutTrainedImgs}
               aboutImgIndex={aboutImgIndex}
               mapPhotoViewerPreviews={mapPhotoViewerPreviews}
+              menuButtonRef={menuButtonRef}
+              toggleMenu={toggleMenu}
+              closeMenuButtonRef={closeMenuButtonRef}
+              menuRef={menuRef}
+              headerBgRef={headerBgRef}
             />
           }
         />

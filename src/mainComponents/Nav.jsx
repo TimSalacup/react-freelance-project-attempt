@@ -4,6 +4,8 @@ import {
   faEnvelope,
   faArrowUp,
   faArrowDown,
+  faBarsStaggered,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import NavContact from "./subComponents/NavContact";
 
@@ -12,7 +14,11 @@ const Nav = ({
   bottomNavRef,
   openBottomNavRef,
   navBottomLinksRef,
-  bottomNavComponents
+  bottomNavComponents,
+  menuButtonRef,
+  toggleMenu,
+  closeMenuButtonRef,
+  menuRef,
 }) => {
   const phoneIcon = (
     <FontAwesomeIcon icon={faPhone} className="nav__top--icon" />
@@ -26,9 +32,18 @@ const Nav = ({
       <nav>
         <div className="nav__top">
           <div className="nav__top--wrapper">
-            <img src="/publicAssets/cvsLogo.png" alt="cvs logo" className="nav__top--logo" />
+            <img
+              src="/publicAssets/cvsLogo.png"
+              alt="cvs logo"
+              className="nav__top--logo"
+            />
             <div className="nav__top--right">
-              <NavContact icon={phoneIcon} text="(+63) 917 703 5047" topText="Call us!" right = ""/>
+              <NavContact
+                icon={phoneIcon}
+                text="(+63) 917 703 5047"
+                topText="Call us!"
+                right=""
+              />
               <div className="nav__top--splitter"></div>
               <NavContact
                 icon={envelopeIcon}
@@ -42,10 +57,40 @@ const Nav = ({
                   </a>
                 }
                 topText="Message us!"
-                right = "right"
+                right="right"
+              />
+              <FontAwesomeIcon
+                ref={menuButtonRef}
+                icon={faBarsStaggered}
+                className="nav__top--menu"
+                onClick={() => toggleMenu()}
+              />
+              <FontAwesomeIcon
+                ref={closeMenuButtonRef}
+                icon={faXmark}
+                className="nav__top--closeMenu invisible"
+                onClick={() => toggleMenu()}
               />
             </div>
           </div>
+        </div>
+        <div ref={menuRef} className="menu">
+          <ul className="menu__links--list">
+            <li className="menu__link">
+              <span className="menu__link--href">Message us</span>
+            </li>
+            <li className="menu__link">
+              <span className="menu__link--href">
+                Link 2
+              </span>
+            </li>
+            <li className="menu__link">
+              <span className="menu__link--href">Link 3 </span>
+            </li>
+            <li className="menu__link">
+              <span className="menu__link--href">Link 4</span>
+            </li>
+          </ul>
         </div>
         <div className="nav__bottom" ref={bottomNavRef}>
           <div className="nav__bottom--wrapper">

@@ -11,7 +11,7 @@ const Footer = () => {
                 target="_blank"
                 className="footer__link--href"
               >
-                Message us on Facebook Messenger
+                Facebook Messenger
               </a>
             </li>
             <li className="footer__link">
