@@ -4,6 +4,7 @@ import Layout from "./pages/Layout";
 import PhotoViewer from "./pages/PhotoViewer";
 import { Route, Routes, useLocation } from "react-router-dom";
 import NavBottomLink from "./mainComponents/subComponents/NavBottomLink";
+import AboutUsPhoneContent from "./mainComponents/subComponents/AboutUsPhoneContent";
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,8 @@ function App() {
   const [headerImagesArray, setHeaderImagesArray] = useState([]);
   const [aboutUsSections, setAboutUsSections] = useState([]);
   const [photoViewerPreviews, setPhotoViewerPreviews] = useState([]);
+  const [aboutUsPhoneContentContainer, setAboutUsPhoneContentContainer] =
+    useState([]);
   const [isHorizontal, setIsHorizontal] = useState(false);
   const [menuOpened, setMenuOpened] = useState(false);
   const [aboutTitle, setAboutTitle] = useState("");
@@ -97,7 +100,6 @@ function App() {
     },
     {
       section: AboutUsSectionsArray[2][0],
-
       title: "TOGETHER WITH DCPI",
       paragraph:
         "CVS Dialysis Center and DCPI (Dialysis Coalition of the Philippines, Inc.) are in partnership together in making A+ Kidney Healthcare Management.",
@@ -321,7 +323,21 @@ function App() {
   // 2) MAPS THE ABOUT US BUTTONS
   // 3) MAPS BOTTOM NAV BUTTONS
   // 4) ADDS EVENT LISTENER TO HEADER BG REF
+  // 5) LOADS CONTENT FOR PHONE ABOUT US
   useEffect(() => {
+    setAboutUsPhoneContentContainer(
+      AboutUsContentArray.map((el, index) => {
+        return (
+          <AboutUsPhoneContent
+            isHorizontal={el.horizontal}
+            paragraph={el.paragraph}
+            title={el.title}
+            img={el.img}
+            key={index}
+          />
+        );
+      })
+    );
     headerBgRef.current.addEventListener("touchstart", headerTouchStart);
     headerBgRef.current.addEventListener("touchend", headerTouchEnd);
     let tempHeaderImages = HeaderImages.map((link, i) => {
@@ -369,9 +385,11 @@ function App() {
     );
   }, []);
 
-  // RUNS WHEN YOU COME OUT FROM PHOTOVIEWER HERE
+  // RUNS WHEN YOU COME OUT FROM PHOTOVIEWER
   const onPhotoViewerClose = () => {
     setTimeout(() => {
+      headerBgRef.current.addEventListener("touchstart", headerTouchStart);
+      headerBgRef.current.addEventListener("touchend", headerTouchEnd);
       headerImgRef.current[0].classList.toggle("visible");
       aboutUsButtonsRef.current[prevActiveAbout.current].classList.toggle(
         "active"
@@ -460,7 +478,6 @@ function App() {
               aboutTitle={aboutTitle}
               aboutPara={aboutPara}
               aboutImg={aboutImg}
-              isHorizontal={isHorizontal}
               aboutSection={aboutSection}
               previousTrainedImg={previousTrainedImg}
               nextTrainedImg={nextTrainedImg}
@@ -472,6 +489,8 @@ function App() {
               closeMenuButtonRef={closeMenuButtonRef}
               menuRef={menuRef}
               headerBgRef={headerBgRef}
+              isHorizontal={isHorizontal}
+              aboutUsPhoneContentContainer={aboutUsPhoneContentContainer}
             />
           }
         />

@@ -6,6 +6,7 @@ import FadeIn from "../mainComponents/subComponents/FadeIn";
 import AboutUs from "../mainComponents/AboutUs";
 import Quotes from "../mainComponents/Quotes";
 import Footer from "../mainComponents/Footer";
+import AboutUsPhone from "../mainComponents/AboutUsPhone";
 
 const Layout = ({
   toggleBottomNav,
@@ -31,6 +32,7 @@ const Layout = ({
   closeMenuButtonRef,
   menuRef,
   headerBgRef,
+  aboutUsPhoneContentContainer,
 }) => {
   return (
     <>
@@ -63,6 +65,16 @@ const Layout = ({
           nextTrainedImg={nextTrainedImg}
           previousTrainedImg={previousTrainedImg}
           mapPhotoViewerPreviews={mapPhotoViewerPreviews}
+        />
+        <AboutUsPhone
+          aboutTitle={aboutTitle}
+          aboutPara={aboutPara}
+          aboutImg={aboutImg}
+          isHorizontal={isHorizontal}
+          nextTrainedImg={nextTrainedImg}
+          previousTrainedImg={previousTrainedImg}
+          mapPhotoViewerPreviews={mapPhotoViewerPreviews}
+          aboutUsPhoneContentContainer={aboutUsPhoneContentContainer}
         />
         <FadeIn>
           <OurServices />
