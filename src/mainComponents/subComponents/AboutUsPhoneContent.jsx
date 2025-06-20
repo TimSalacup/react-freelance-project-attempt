@@ -1,6 +1,7 @@
 import FadeIn from "./FadeIn";
+import ScrollGif from "./ScrollGif";
 
-const AboutUsPhoneContent = ({ isHorizontal, paragraph, title, img }) => {
+const AboutUsPhoneContent = ({ isHorizontal, paragraph, title, img, section, aboutUsContentImgRef }) => {
   return (
     <>
       <>
@@ -10,7 +11,7 @@ const AboutUsPhoneContent = ({ isHorizontal, paragraph, title, img }) => {
               <h2 className="aboutUsContent__left--title">{title}</h2>
               <span className="aboutUsContent__left--para">{paragraph}</span>
             </div>
-            <div className="aboutUsContent__right">
+            <div ref={aboutUsContentImgRef} className="aboutUsContent__right">
               <img
                 src={img || undefined}
                 alt="About Us Image"
@@ -18,6 +19,7 @@ const AboutUsPhoneContent = ({ isHorizontal, paragraph, title, img }) => {
                   isHorizontal ? "horizontal" : ""
                 }`}
               />
+              {section === "T" && <ScrollGif />}
             </div>
           </div>
         </FadeIn>

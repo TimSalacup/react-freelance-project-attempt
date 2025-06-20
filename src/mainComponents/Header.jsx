@@ -3,6 +3,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import ScrollGif from "./subComponents/ScrollGif";
 
 const Header = ({
   headerImagesArray,
@@ -14,26 +15,27 @@ const Header = ({
     <>
       <section id="header">
         <header>
-          <div
-            className="header__arrow header__left"
-            onClick={() => previousImage()}
-          >
-            <FontAwesomeIcon
-              icon={faChevronLeft}
-              className="header__arrow--left"
-            />
-          </div>
-          <div
-            className="header__arrow header__right"
-            onClick={() => nextImage()}
-          >
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              className="header__arrow--right"
-            />
-          </div>
           <div ref={headerBgRef} className="header__bg">
+            <div
+              className="header__arrow header__left"
+              onClick={() => previousImage()}
+            >
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                className="header__arrow--left"
+              />
+            </div>
+            <div
+              className="header__arrow header__right"
+              onClick={() => nextImage()}
+            >
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className="header__arrow--right"
+              />
+            </div>
             {headerImagesArray}
+            <ScrollGif />
           </div>
           <div className="header__bgfilter"></div>
           <div className="header__wrapper">

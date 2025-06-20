@@ -18,11 +18,12 @@ function App() {
   const headerImgRef = useRef([]);
   const aboutUsButtonsRef = useRef([]);
   const photoViewerPreviewsRef = useRef([]);
+  const aboutUsContentImgRef = useRef([]);
+  let currentAbout = useRef([]);
   let aboutImgIndex = useRef(0);
   let prevActiveNav = useRef(0);
   let prevActiveHeader = useRef(0);
   let prevActiveAbout = useRef(0);
-  let currentAbout = useRef([]);
   let startX = useRef(0);
   let endX = useRef(0);
   let diffX = useRef(0);
@@ -34,9 +35,16 @@ function App() {
     useState([]);
   const [isHorizontal, setIsHorizontal] = useState(false);
   const [menuOpened, setMenuOpened] = useState(false);
+  const [aboutUsContentImgRefReady, setAboutUsContentImgRefReady] =
+    useState(false);
+  const [
+    aboutUsContentPhoneTrainedImgReady,
+    setAboutUsContentPhoneTrainedImgReady,
+  ] = useState(false);
   const [aboutTitle, setAboutTitle] = useState("");
   const [aboutPara, setAboutPara] = useState("");
   const [aboutImg, setAboutImg] = useState("");
+  const [aboutPhoneImg, setAboutPhoneImg] = useState("");
   const [aboutSection, setAboutSection] = useState("T");
   const [photoViewerImg, setPhotoViewerImg] = useState("T");
 
@@ -87,7 +95,7 @@ function App() {
           <br />~ Mr. Tomas Julius G. Salacup, CVS Board Member
         </>
       ),
-      img: AboutUsImgs.AboutTrainedImgs[0],
+      img: AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current],
       horizontal: false,
     },
     {
@@ -318,12 +326,6 @@ function App() {
     }
   }, [aboutUsButtonsRef]);
 
-  // RUNS WHEN THE PAGE FIRST LOADS:
-  // 1) LOADS THE IMAGES ON THE HEADER
-  // 2) MAPS THE ABOUT US BUTTONS
-  // 3) MAPS BOTTOM NAV BUTTONS
-  // 4) ADDS EVENT LISTENER TO HEADER BG REF
-  // 5) LOADS CONTENT FOR PHONE ABOUT US
   useEffect(() => {
     setAboutUsPhoneContentContainer(
       AboutUsContentArray.map((el, index) => {
@@ -332,12 +334,84 @@ function App() {
             isHorizontal={el.horizontal}
             paragraph={el.paragraph}
             title={el.title}
-            img={el.img}
+            img={el.section === "T" ? aboutPhoneImg : el.img}
             key={index}
+            section={el.section}
+            aboutUsContentImgRef={(el) => {
+              if (el) aboutUsContentImgRef.current[index] = el;
+              index === AboutUsContentArray.length - 1 &&
+                setAboutUsContentImgRefReady(true);
+            }}
           />
         );
       })
     );
+  }, [aboutUsContentPhoneTrainedImgReady, aboutPhoneImg]);
+
+  useEffect(() => {
+    if (aboutUsContentImgRefReady) {
+      aboutUsContentImgRef.current[0].addEventListener(
+        "touchstart",
+        aboutTouchStart
+      );
+      aboutUsContentImgRef.current[0].addEventListener(
+        "touchend",
+        aboutTouchEnd
+      );
+    }
+  }, [aboutUsContentImgRefReady]);
+
+  const aboutTouchStart = (e) => {
+    startX.current = e.touches[0].clientX;
+  };
+
+  const aboutTouchEnd = (e) => {
+    endX.current = e.changedTouches[0].clientX;
+    diffX.current = Math.ceil(startX.current - endX.current);
+    if (diffX.current > 30) {
+      nextTrainedImg();
+    } else if (diffX.current < -60) {
+      previousTrainedImg();
+    }
+  };
+
+  const nextTrainedImg = () => {
+    if (aboutImgIndex.current === AboutUsImgs.AboutTrainedImgs.length - 1) {
+      aboutImgIndex.current = 0;
+      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+    } else {
+      ++aboutImgIndex.current;
+      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+    }
+  };
+
+  const previousTrainedImg = () => {
+    if (aboutImgIndex.current === 0) {
+      aboutImgIndex.current = AboutUsImgs.AboutTrainedImgs.length - 1;
+      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+    } else {
+      --aboutImgIndex.current;
+      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+    }
+  };
+
+  // RUNS WHEN THE PAGE FIRST LOADS:
+  // 1) LOADS THE IMAGES ON THE HEADER
+  // 2) MAPS THE ABOUT US BUTTONS
+  // 3) MAPS BOTTOM NAV BUTTONS
+  // 4) ADDS EVENT LISTENER TO HEADER BG REF
+  // 5) LOADS THE "TRAINED" SECTION IMAGES FOR THE PHONE VERSION
+  useEffect(() => {
+    setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+    setAboutUsContentPhoneTrainedImgReady(true);
     headerBgRef.current.addEventListener("touchstart", headerTouchStart);
     headerBgRef.current.addEventListener("touchend", headerTouchEnd);
     let tempHeaderImages = HeaderImages.map((link, i) => {
@@ -433,30 +507,6 @@ function App() {
       address: "footer",
     },
   ];
-
-  const nextTrainedImg = () => {
-    if (aboutImgIndex.current === AboutUsImgs.AboutTrainedImgs.length - 1) {
-      aboutImgIndex.current = 0;
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-    } else {
-      ++aboutImgIndex.current;
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-    }
-  };
-
-  const previousTrainedImg = () => {
-    if (aboutImgIndex.current === 0) {
-      aboutImgIndex.current = AboutUsImgs.AboutTrainedImgs.length - 1;
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-    } else {
-      --aboutImgIndex.current;
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-    }
-  };
 
   return (
     <>

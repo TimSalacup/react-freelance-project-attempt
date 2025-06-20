@@ -452,6 +452,107 @@ header {
   background: rgba(0, 0, 0, 0.2);
 }
 
+.scrollGif__icon {
+  position: absolute;
+  left: 50%;
+}
+
+.scrollGif__icon.phone {
+  color: rgb(255, 255, 255);
+  font-size: 32px;
+  bottom: 32px;
+  animation: swipePhone 5000ms linear infinite;
+}
+
+@keyframes swipePhone {
+  0% {
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.scrollGif__icon.point {
+  font-size: 32px;
+  color: rgb(60, 196, 188);
+  bottom: 20px;
+  animation: swipePoint 10000ms linear infinite;
+}
+
+@keyframes swipePoint {
+  0% {
+    opacity: 0;
+    transform: scale(2);
+  }
+  5% {
+    opacity: 1;
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: translateX(0px);
+  }
+  15% {
+    transform: translateX(-30px);
+  }
+  25% {
+    transform: translateX(-30px);
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  30% {
+    opacity: 0;
+  }
+
+  40% {
+    transform: translateX(-30px);
+  }
+  
+  50% {
+    transform: translateX(0);
+    opacity: 0;
+    transform: scale(2);  
+  }
+
+  55% {
+    opacity: 1;
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+  60% {
+    transform: translateX(0px);
+  }
+  65% {
+    transform: translateX(30px);
+  }
+  75% {
+    transform: translateX(30px);
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+}
+
 /* MAIN FADEINDIV */
 
 .fadeInDiv {
@@ -544,6 +645,10 @@ main {
 .section__wrapper.aboutUs {
   width: 100%;
   position: relative;
+}
+
+.section__wrapper.aboutUs.phone {
+  display: none;
 }
 
 .aboutUs__bg {
@@ -1009,9 +1114,7 @@ main {
   .nav__top--splitter,
   .nav__bottom--arrow,
   .nav__bottom,
-  .header__arrow,
-  .header__bgfilter,
-  .aboutUs.phone {
+  .header__bgfilter {
     display: none;
   }
 
@@ -1020,6 +1123,11 @@ main {
     flex-direction: column;
     justify-content: start;
     height: 85vh;
+  }
+
+  .header__arrow--right, .header__arrow--left {
+    background-color: rgb(60, 196, 188);
+    color: rgb(225, 225, 225);
   }
 
   .header__bg {
@@ -1187,7 +1295,7 @@ main {
     display: none;
   }
 
-  .aboutUs.phone {
+  .section__wrapper.aboutUs.phone {
     display: flex;
     padding-bottom: 0;
   }
@@ -1238,13 +1346,23 @@ main {
 
   .aboutUsContent__right {
     width: 100%;
-    height: 40vh;
+    height: 50vh;
     border-radius: 8px;
+    max-width: 592px;
+    margin: auto;
   }
 
   .aboutUsContent__right:hover .aboutUsContent__right--img {
     transform: scale(100%);
     filter: blur(0px);
+  }
+
+  .footer__link--href {
+    font-size: 14px;
+  }
+
+  .footer__quote {
+    text-align: center;
   }
 }
 
@@ -1252,5 +1370,14 @@ main {
   .header__bg--img {
     height: 100%;
     width: auto;
+  }
+
+  .footer__img {
+    width: 80%;
+    height: auto;
+  }
+
+  .footer__quote {
+    text-align: center;
   }
 }
