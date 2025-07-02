@@ -357,7 +357,7 @@ header {
   height: 100%;
   font-size: 24px;
   width: 80px;
-  z-index: 4;
+  z-index: 1;
   color: rgb(137, 137, 137);
   cursor: pointer;
   transition: all 300ms ease;
@@ -453,8 +453,9 @@ header {
 }
 
 .scrollGif__icon {
+  display: none;
   position: absolute;
-  left: 50%;
+  left: 49%;
 }
 
 .scrollGif__icon.phone {
@@ -462,6 +463,7 @@ header {
   font-size: 32px;
   bottom: 32px;
   animation: swipePhone 5000ms linear infinite;
+  transform: translateY(-40px);
 }
 
 @keyframes swipePhone {
@@ -491,6 +493,7 @@ header {
   color: rgb(60, 196, 188);
   bottom: 20px;
   animation: swipePoint 10000ms linear infinite;
+  bottom: 60px;
 }
 
 @keyframes swipePoint {
@@ -508,6 +511,7 @@ header {
   }
   15% {
     transform: translateX(-30px);
+
   }
   25% {
     transform: translateX(-30px);
@@ -551,6 +555,35 @@ header {
     transform: translateX(30px);
     opacity: 0;
   }
+}
+
+.photoCircles__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.photoCircles__wrapper>:last-child {
+  margin-right: 0;
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+  border: 2px solid white;
+  border-radius: 100%;
+}
+
+.circle.selected {
+  background-color: white;
+  width: 12px;
+  height: 12px;
 }
 
 /* MAIN FADEINDIV */
@@ -791,8 +824,9 @@ main {
   font-size: 48px;
   color: black;
   position: absolute;
-  top: 44%;
-  left: 44%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   opacity: 0;
   transition: all 300ms ease;
 }
@@ -1061,7 +1095,8 @@ main {
     width: 100vw;
   }
 
-  .aboutUs__sections--bg {
+  .aboutUs__sections--bg,
+  .scrollGif__icon {
     display: none;
   }
 
@@ -1125,9 +1160,17 @@ main {
     height: 85vh;
   }
 
+  header>:last-child {
+    top: 64%;
+  }
+
+  .scrollGif__icon {
+    display: block;
+  }
+
   .header__arrow--right, .header__arrow--left {
     background-color: rgb(60, 196, 188);
-    color: rgb(225, 225, 225);
+    color: white;
   }
 
   .header__bg {
@@ -1140,6 +1183,10 @@ main {
 
   .header__bg--img {
     transform: translateY(0%);
+  }
+
+  .photoCircles__wrapper {
+    bottom: 232px;
   }
 
   .header__wrapper {
@@ -1245,6 +1292,11 @@ main {
   header {
     height: auto;
   }
+
+  .scrollGif__icon {
+    left: 50%;
+  }
+
   .header__wrapper {
     flex-direction: column;
     align-items: start;
@@ -1283,6 +1335,19 @@ main {
   .header__bg--img {
     height: auto;
     width: 100%;
+  }
+
+  .header__arrow--left.about, .header__arrow--right.about {
+    background-color: rgb(172, 204, 212);
+  }
+
+  .header__arrow--left.about:hover, .header__arrow--right.about:hover {
+    background-color: rgb(172, 204, 212);
+  }
+
+  .photoCircles__wrapper {
+    transform: translateY(-90px);
+    left: 46%;
   }
 
   .aboutUs__bgfilter {

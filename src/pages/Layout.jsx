@@ -33,6 +33,11 @@ const Layout = ({
   menuRef,
   headerBgRef,
   aboutUsPhoneContentContainer,
+  indexHeader,
+  indexAbout,
+  aboutImgIndex,
+  aboutTrainedImgs,
+
 }) => {
   return (
     <>
@@ -54,6 +59,7 @@ const Layout = ({
           nextImage={nextImage}
           previousImage={previousImage}
           headerBgRef={headerBgRef}
+          index={indexHeader}
         />
         <AboutUs
           aboutUsSections={aboutUsSections}
@@ -65,8 +71,13 @@ const Layout = ({
           nextTrainedImg={nextTrainedImg}
           previousTrainedImg={previousTrainedImg}
           mapPhotoViewerPreviews={mapPhotoViewerPreviews}
+          indexAbout={indexAbout}
+          aboutImgIndex={aboutImgIndex}
+          aboutTrainedImgs={aboutTrainedImgs}
         />
         <AboutUsPhone
+          aboutTrainedImgs={aboutTrainedImgs}
+          aboutImgIndex={aboutImgIndex}
           aboutTitle={aboutTitle}
           aboutPara={aboutPara}
           aboutImg={aboutImg}

@@ -14,19 +14,20 @@ function App() {
   const closeMenuButtonRef = useRef();
   const menuRef = useRef();
   const headerBgRef = useRef();
+  const scrollGifIconsRef = useRef();
   const navBottomLinkContainerRef = useRef([]);
   const headerImgRef = useRef([]);
   const aboutUsButtonsRef = useRef([]);
   const photoViewerPreviewsRef = useRef([]);
   const aboutUsContentImgRef = useRef([]);
   let currentAbout = useRef([]);
-  let aboutImgIndex = useRef(0);
   let prevActiveNav = useRef(0);
-  let prevActiveHeader = useRef(0);
-  let prevActiveAbout = useRef(0);
   let startX = useRef(0);
   let endX = useRef(0);
   let diffX = useRef(0);
+  let prevActiveAbout = useRef(0);
+  const [aboutImgIndex, setAboutImgIndex] = useState(0);
+  const [prevActiveHeader, setPrevActiveHeader] = useState(0);
   const [bottomNavComponents, setBottomNavComponents] = useState([]);
   const [headerImagesArray, setHeaderImagesArray] = useState([]);
   const [aboutUsSections, setAboutUsSections] = useState([]);
@@ -95,7 +96,7 @@ function App() {
           <br />~ Mr. Tomas Julius G. Salacup, CVS Board Member
         </>
       ),
-      img: AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current],
+      img: AboutUsImgs.AboutTrainedImgs[aboutImgIndex],
       horizontal: false,
     },
     {
@@ -115,6 +116,11 @@ function App() {
       horizontal: true,
     },
   ];
+
+  // MAKES SURE THE PAGE REFRESHES AT THE TOP
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
 
   // TOGGLES THE VISIBILITY OF THE MENU BUTTONS & MENU
   const toggleMenu = () => {
@@ -151,7 +157,7 @@ function App() {
   const mapPhotoViewerPreviews = () => {
     if (aboutSection === "T") {
       currentAbout = AboutUsImgs.AboutTrainedImgs;
-      setPhotoViewerImg(currentAbout[aboutImgIndex.current]);
+      setPhotoViewerImg(currentAbout[aboutImgIndex]);
     } else if (aboutSection === "A") {
       currentAbout = AboutUsImgs.AboutAccredImgs;
       setPhotoViewerImg(currentAbout[0]);
@@ -181,7 +187,7 @@ function App() {
     );
     setTimeout(() => {
       if (aboutSection === "T")
-        photoViewerPreviewsRef.current[aboutImgIndex.current].classList.toggle(
+        photoViewerPreviewsRef.current[aboutImgIndex].classList.toggle(
           "selected"
         );
       else {
@@ -190,25 +196,30 @@ function App() {
     }, 100);
   };
 
+  let photoViewerPreviousIndex = useRef(0);
+  let photoViewerIndex = useRef(0);
+
+  // UPDATES PHOTOVIEWER INDEX WHEN NEEDED
+  useEffect(() => {
+    if (aboutImgIndex) photoViewerIndex.current = aboutImgIndex;
+  }, [aboutImgIndex, aboutImg]);
+
   // PHOTOVIEWER - CHANGES SELECTED PREVIEW
   const changePhotoViewerIndex = (index) => {
-    if (index !== aboutImgIndex.current) {
-      photoViewerPreviewsRef.current[aboutImgIndex.current].classList.toggle(
+    if (index !== photoViewerIndex.current) {
+      photoViewerPreviewsRef.current[
+        photoViewerPreviousIndex.current
+      ].classList.toggle("selected");
+      photoViewerIndex.current = index;
+      photoViewerPreviewsRef.current[photoViewerIndex.current].classList.toggle(
         "selected"
       );
-      aboutImgIndex.current = index;
-      photoViewerPreviewsRef.current[aboutImgIndex.current].classList.toggle(
-        "selected"
-      );
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[photoViewerIndex.current]);
+      setAboutImg(AboutUsImgs.AboutTrainedImgs[photoViewerIndex.current]);
+      photoViewerPreviousIndex.current = index;
+      setAboutImgIndex(index);
     }
   };
-
-  // MAKES SURE THE PAGE REFRESHES AT THE TOP
-  if ("scrollRestoration" in window.history) {
-    window.history.scrollRestoration = "manual";
-  }
 
   // OPENS AND CLOSES THE BOTTOM PART OF THE NAV
   const toggleBottomNav = () => {
@@ -238,45 +249,18 @@ function App() {
       );
   }, [bottomNavComponents]);
 
-  // GOES TO THE NEXT HEADER PHOTO
-  const nextImage = () => {
-    if (prevActiveHeader.current + 1 <= HeaderImages.length - 1) {
-      headerImgRef.current[prevActiveHeader.current].classList.toggle(
-        "visible"
-      );
-      headerImgRef.current[prevActiveHeader.current + 1].classList.toggle(
-        "visible"
-      );
-      ++prevActiveHeader.current;
-    } else {
-      headerImgRef.current[prevActiveHeader.current].classList.toggle(
-        "visible"
-      );
-      prevActiveHeader.current = 0;
-      headerImgRef.current[prevActiveHeader.current].classList.toggle(
-        "visible"
-      );
-    }
+  // DETECTS WHEN THE USER PRESSES AND RELEASES (HORIZONTAL SCROLLS)
+  const aboutTouchStart = (e) => {
+    startX.current = e.touches[0].clientX;
   };
 
-  // GOES TO THE PREVIOUS HEADER PHOTO
-  const previousImage = () => {
-    if (prevActiveHeader.current - 1 >= 0) {
-      headerImgRef.current[prevActiveHeader.current].classList.toggle(
-        "visible"
-      );
-      headerImgRef.current[prevActiveHeader.current - 1].classList.toggle(
-        "visible"
-      );
-      --prevActiveHeader.current;
-    } else {
-      headerImgRef.current[prevActiveHeader.current].classList.toggle(
-        "visible"
-      );
-      prevActiveHeader.current = HeaderImages.length - 1;
-      headerImgRef.current[prevActiveHeader.current].classList.toggle(
-        "visible"
-      );
+  const aboutTouchEnd = (e) => {
+    endX.current = e.changedTouches[0].clientX;
+    diffX.current = Math.ceil(startX.current - endX.current);
+    if (diffX.current > 30) {
+      nextTrainedImg();
+    } else if (diffX.current < -60) {
+      previousTrainedImg();
     }
   };
 
@@ -293,6 +277,49 @@ function App() {
     } else if (diffX.current < -60) {
       previousImage();
     }
+  };
+
+  const prevActiveHeaderRef = useRef(0);
+  // GOES TO THE NEXT HEADER PHOTO
+  const nextImage = () => {
+    const nextIndex =
+      prevActiveHeaderRef.current + 1 <= HeaderImages.length - 1
+        ? prevActiveHeaderRef.current + 1
+        : 0;
+
+    headerImgRef.current[prevActiveHeaderRef.current].classList.toggle(
+      "visible"
+    );
+
+    headerImgRef.current[nextIndex].classList.toggle("visible");
+
+    prevActiveHeaderRef.current = nextIndex;
+    setPrevActiveHeader(nextIndex);
+
+    document
+      .querySelector(".scrollGif__icons--header")
+      .classList.add("invisible");
+  };
+
+  // GOES TO THE PREVIOUS HEADER PHOTO
+  const previousImage = () => {
+    const previousIndex =
+      prevActiveHeaderRef.current - 1 < 0
+        ? HeaderImages.length - 1
+        : prevActiveHeaderRef.current - 1;
+
+    headerImgRef.current[prevActiveHeaderRef.current].classList.toggle(
+      "visible"
+    );
+
+    headerImgRef.current[previousIndex].classList.toggle("visible");
+
+    prevActiveHeaderRef.current = previousIndex;
+    setPrevActiveHeader(previousIndex);
+
+    document
+      .querySelector(".scrollGif__icons--header")
+      .classList.add("invisible");
   };
 
   // CHANGES ABOUT IMAGE AND ABOUT CONTENT
@@ -316,13 +343,13 @@ function App() {
     if (aboutUsButtonsRef) {
       setAboutTitle(AboutUsContentArray[prevActiveAbout.current].title);
       setAboutPara(AboutUsContentArray[prevActiveAbout.current].paragraph);
-      setAboutImg(AboutUsContentArray[aboutImgIndex.current].img);
+      setAboutImg(AboutUsContentArray[prevActiveAbout.current].img);
       setIsHorizontal(AboutUsContentArray[prevActiveAbout.current].horizontal);
       setTimeout(() => {
         aboutUsButtonsRef.current[prevActiveAbout.current].classList.toggle(
           "active"
         );
-      }, 1);
+      }, 50);
     }
   }, [aboutUsButtonsRef]);
 
@@ -342,6 +369,8 @@ function App() {
               index === AboutUsContentArray.length - 1 &&
                 setAboutUsContentImgRefReady(true);
             }}
+            nextTrainedImg={nextTrainedImg}
+            previousTrainedImg={previousTrainedImg}
           />
         );
       })
@@ -361,45 +390,51 @@ function App() {
     }
   }, [aboutUsContentImgRefReady]);
 
-  const aboutTouchStart = (e) => {
-    startX.current = e.touches[0].clientX;
-  };
-
-  const aboutTouchEnd = (e) => {
-    endX.current = e.changedTouches[0].clientX;
-    diffX.current = Math.ceil(startX.current - endX.current);
-    if (diffX.current > 30) {
-      nextTrainedImg();
-    } else if (diffX.current < -60) {
-      previousTrainedImg();
-    }
-  };
+  // CHANGES THE TRAINED IMAGES ON THE ABOUT US SECTION
 
   const nextTrainedImg = () => {
-    if (aboutImgIndex.current === AboutUsImgs.AboutTrainedImgs.length - 1) {
-      aboutImgIndex.current = 0;
-      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+    if (aboutImgIndex === AboutUsImgs.AboutTrainedImgs.length - 1) {
+      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[0]);
+      setAboutImg(AboutUsImgs.AboutTrainedImgs[0]);
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[0]);
+      setAboutImgIndex(0);
+      document
+        .querySelector(".scrollGif__icons--about")
+        .classList.add("invisible");
     } else {
-      ++aboutImgIndex.current;
-      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex + 1]);
+      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex + 1]);
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex + 1]);
+      setAboutImgIndex(aboutImgIndex + 1);
+      document
+        .querySelector(".scrollGif__icons--about")
+        .classList.add("invisible");
     }
   };
 
   const previousTrainedImg = () => {
-    if (aboutImgIndex.current === 0) {
-      aboutImgIndex.current = AboutUsImgs.AboutTrainedImgs.length - 1;
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+    if (aboutImgIndex === 0) {
+      setAboutImg(
+        AboutUsImgs.AboutTrainedImgs[AboutUsImgs.AboutTrainedImgs.length - 1]
+      );
+      setAboutPhoneImg(
+        AboutUsImgs.AboutTrainedImgs[AboutUsImgs.AboutTrainedImgs.length - 1]
+      );
+      setPhotoViewerImg(
+        AboutUsImgs.AboutTrainedImgs[AboutUsImgs.AboutTrainedImgs.length - 1]
+      );
+      setAboutImgIndex(AboutUsImgs.AboutTrainedImgs.length - 1);
+      document
+        .querySelector(".scrollGif__icons--about")
+        .classList.add("invisible");
     } else {
-      --aboutImgIndex.current;
-      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex - 1]);
+      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex - 1]);
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex - 1]);
+      setAboutImgIndex(aboutImgIndex - 1);
+      document
+        .querySelector(".scrollGif__icons--about")
+        .classList.add("invisible");
     }
   };
 
@@ -410,7 +445,7 @@ function App() {
   // 4) ADDS EVENT LISTENER TO HEADER BG REF
   // 5) LOADS THE "TRAINED" SECTION IMAGES FOR THE PHONE VERSION
   useEffect(() => {
-    setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current]);
+    setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex]);
     setAboutUsContentPhoneTrainedImgReady(true);
     headerBgRef.current.addEventListener("touchstart", headerTouchStart);
     headerBgRef.current.addEventListener("touchend", headerTouchEnd);
@@ -476,8 +511,8 @@ function App() {
 
   // SETS THE DEFAULT BACKGROUND IMAGE IN THE HEADER
   useEffect(() => {
-    if (headerImgRef.current[prevActiveHeader.current]) {
-      headerImgRef.current[prevActiveHeader.current].classList.add("visible");
+    if (headerImgRef.current[prevActiveHeader]) {
+      headerImgRef.current[prevActiveHeader].classList.add("visible");
     }
   }, [headerImagesArray]);
 
@@ -522,6 +557,7 @@ function App() {
               navBottomLinkContainerRef={navBottomLinkContainerRef}
               bottomNavComponents={bottomNavComponents}
               headerImagesArray={headerImagesArray}
+              headerImages={HeaderImages}
               nextImage={nextImage}
               previousImage={previousImage}
               aboutUsSections={aboutUsSections}
@@ -531,7 +567,7 @@ function App() {
               aboutSection={aboutSection}
               previousTrainedImg={previousTrainedImg}
               nextTrainedImg={nextTrainedImg}
-              AboutTrainedImgs={AboutUsImgs.AboutTrainedImgs}
+              aboutTrainedImgs={AboutUsImgs.AboutTrainedImgs}
               aboutImgIndex={aboutImgIndex}
               mapPhotoViewerPreviews={mapPhotoViewerPreviews}
               menuButtonRef={menuButtonRef}
@@ -541,6 +577,8 @@ function App() {
               headerBgRef={headerBgRef}
               isHorizontal={isHorizontal}
               aboutUsPhoneContentContainer={aboutUsPhoneContentContainer}
+              scrollGifIconsRef={scrollGifIconsRef}
+              indexHeader={prevActiveHeader}
             />
           }
         />

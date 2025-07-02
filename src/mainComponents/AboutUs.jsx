@@ -11,6 +11,9 @@ const AboutUs = ({
   nextTrainedImg,
   previousTrainedImg,
   mapPhotoViewerPreviews,
+  indexAbout,
+  aboutImgIndex,
+  aboutTrainedImgs,
 }) => {
   return (
     <>
@@ -42,6 +45,9 @@ const AboutUs = ({
             nextTrainedImg={nextTrainedImg}
             previousTrainedImg={previousTrainedImg}
             mapPhotoViewerPreviews={mapPhotoViewerPreviews}
+            indexAbout={indexAbout}
+            aboutImgIndex={aboutImgIndex}
+            aboutTrainedImgs={aboutTrainedImgs}
           />
         </FadeIn>
       </div>

@@ -5,6 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import PhotoCircles from "./PhotoCircles";
 
 const AboutUsContent = ({
   aboutTitle,
@@ -15,6 +16,8 @@ const AboutUsContent = ({
   nextTrainedImg,
   previousTrainedImg,
   mapPhotoViewerPreviews,
+  aboutImgIndex,
+  aboutTrainedImgs,
 }) => {
   return (
     <>
@@ -34,8 +37,9 @@ const AboutUsContent = ({
             className={`aboutUsContent__right--img ${
               isHorizontal ? "horizontal" : ""
             }`}
-          />
+          />  
           <FontAwesomeIcon icon={faEye} className="aboutUsContent__eye" />
+          <PhotoCircles index={aboutImgIndex} length={aboutTrainedImgs.length} section={section} />
         </Link>
         <div className="aboutUsContent__arrows">
           <FontAwesomeIcon

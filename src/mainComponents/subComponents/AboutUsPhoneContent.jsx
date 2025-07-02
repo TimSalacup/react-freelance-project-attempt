@@ -1,7 +1,22 @@
+import {
+  faChevronLeft,
+  faChevronRight,
+  faHandPointer,
+  faMobileScreenButton,
+} from "@fortawesome/free-solid-svg-icons";
 import FadeIn from "./FadeIn";
-import ScrollGif from "./ScrollGif";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const AboutUsPhoneContent = ({ isHorizontal, paragraph, title, img, section, aboutUsContentImgRef }) => {
+const AboutUsPhoneContent = ({
+  isHorizontal,
+  paragraph,
+  title,
+  img,
+  section,
+  aboutUsContentImgRef,
+  previousTrainedImg,
+  nextTrainedImg,
+}) => {
   return (
     <>
       <>
@@ -11,6 +26,7 @@ const AboutUsPhoneContent = ({ isHorizontal, paragraph, title, img, section, abo
               <h2 className="aboutUsContent__left--title">{title}</h2>
               <span className="aboutUsContent__left--para">{paragraph}</span>
             </div>
+
             <div ref={aboutUsContentImgRef} className="aboutUsContent__right">
               <img
                 src={img || undefined}
@@ -19,7 +35,40 @@ const AboutUsPhoneContent = ({ isHorizontal, paragraph, title, img, section, abo
                   isHorizontal ? "horizontal" : ""
                 }`}
               />
-              {section === "T" && <ScrollGif />}
+              {section === "T" && (
+                <div
+                  className="header__arrow header__left"
+                  onClick={() => previousTrainedImg()}
+                >
+                  <FontAwesomeIcon
+                    icon={faChevronLeft}
+                    className="header__arrow--left about"
+                  />
+                </div>
+              )}
+              {section === "T" && (
+                <div
+                  className="header__arrow header__right"
+                  onClick={() => nextTrainedImg()}
+                >
+                  <FontAwesomeIcon
+                    icon={faChevronRight}
+                    className="header__arrow--right about"
+                  />
+                </div>
+              )}
+              {section === "T" && (
+                <div className="scrollGif__icons--about">
+                  <FontAwesomeIcon
+                    icon={faMobileScreenButton}
+                    className="scrollGif__icon phone"
+                  />
+                  <FontAwesomeIcon
+                    icon={faHandPointer}
+                    className="scrollGif__icon point"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </FadeIn>

@@ -2,15 +2,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
+  faHandPointer,
+  faMobileScreenButton,
 } from "@fortawesome/free-solid-svg-icons";
-import ScrollGif from "./subComponents/ScrollGif";
+import PhotoCircles from "./subComponents/PhotoCircles";
+import { useEffect, useState } from "react";
 
 const Header = ({
   headerImagesArray,
   nextImage,
   previousImage,
   headerBgRef,
+  index,
 }) => {
+  const [length, setLength] = useState(0);
+
+  const waitForHeaderImagesArray = () => {
+    if (headerImagesArray.length > 0) {
+      setLength(headerImagesArray.length);
+    }
+  };
+
+  useEffect(() => {
+    waitForHeaderImagesArray();
+  }, [headerImagesArray]);
+
+
   return (
     <>
       <section id="header">
@@ -35,9 +52,37 @@ const Header = ({
               />
             </div>
             {headerImagesArray}
-            <ScrollGif />
+            <div className="scrollGif__icons--header">
+              <FontAwesomeIcon
+                icon={faMobileScreenButton}
+                className="scrollGif__icon phone"
+              />
+              <FontAwesomeIcon
+                icon={faHandPointer}
+                className="scrollGif__icon point"
+              />
+            </div>
           </div>
-          <div className="header__bgfilter"></div>
+          <div className="header__bgfilter">
+            <div
+              className="header__arrow header__left"
+              onClick={() => previousImage()}
+            >
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                className="header__arrow--left"
+              />
+            </div>
+            <div
+              className="header__arrow header__right"
+              onClick={() => nextImage()}
+            >
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className="header__arrow--right"
+              />
+            </div>
+          </div>
           <div className="header__wrapper">
             <div className="header__content">
               <div className="header__content--subtitle">
@@ -62,6 +107,7 @@ const Header = ({
               </button>
             </div>
           </div>
+          <PhotoCircles index={index} length={length} section={null} />
         </header>
       </section>
     </>
