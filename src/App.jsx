@@ -174,7 +174,6 @@ function App() {
             ref={(el) => {
               if (el) photoViewerPreviewsRef.current[i] = el;
             }}
-            onClick={() => changePhotoViewerIndex(i)}
           >
             <img
               src={`${img}`}
@@ -196,30 +195,29 @@ function App() {
     }, 100);
   };
 
-  let photoViewerPreviousIndex = useRef(0);
   let photoViewerIndex = useRef(0);
 
-  // UPDATES PHOTOVIEWER INDEX WHEN NEEDED
+  // UPDATES PHOTOVIEWER INDEX WHEN NEEDED HERE
   useEffect(() => {
     if (aboutImgIndex) photoViewerIndex.current = aboutImgIndex;
   }, [aboutImgIndex, aboutImg]);
 
-  // PHOTOVIEWER - CHANGES SELECTED PREVIEW
-  const changePhotoViewerIndex = (index) => {
-    if (index !== photoViewerIndex.current) {
-      photoViewerPreviewsRef.current[
-        photoViewerPreviousIndex.current
-      ].classList.toggle("selected");
-      photoViewerIndex.current = index;
+  let photoViewerNextIndex = 0;
+  const nextPhotoViewerImage = () => {
+    if (aboutSection === "T") {
+        nextIndex + 1 <= photoViewerIndex.current.length
+        ? (nextIndex = photoViewerIndex.current + 1)
+        : (nextIndex = 0);
+      photoViewerPreviewsRef.current[nextIndex].classList.toggle("selected");
       photoViewerPreviewsRef.current[photoViewerIndex.current].classList.toggle(
         "selected"
       );
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[photoViewerIndex.current]);
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[photoViewerIndex.current]);
-      photoViewerPreviousIndex.current = index;
-      setAboutImgIndex(index);
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[nextIndex]);
+      photoViewerIndex.current++;
     }
   };
+
+  const previousPhotoViewerImage = () => {};
 
   // OPENS AND CLOSES THE BOTTOM PART OF THE NAV
   const toggleBottomNav = () => {
@@ -390,8 +388,7 @@ function App() {
     }
   }, [aboutUsContentImgRefReady]);
 
-  // CHANGES THE TRAINED IMAGES ON THE ABOUT US SECTION
-
+  // CHANGES THE TRAINED IMAGES ON THE ABOUT US SECTION HERE
   const nextTrainedImg = () => {
     if (aboutImgIndex === AboutUsImgs.AboutTrainedImgs.length - 1) {
       setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[0]);
@@ -589,6 +586,8 @@ function App() {
               onPhotoViewerClose={onPhotoViewerClose}
               photoViewerPreviews={photoViewerPreviews}
               photoViewerImg={photoViewerImg}
+              previousPhotoViewerImage={previousPhotoViewerImage}
+              nextPhotoViewerImage={nextPhotoViewerImage}
             />
           }
         />

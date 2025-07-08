@@ -905,6 +905,14 @@ main {
   height: 100%;
 }
 
+.photoViewer__arrow--left, .photoViewer__arrow--right{
+  margin: 0 24px;
+  padding: 16px 20px;
+  border-radius: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 300ms ease;
+}
+
 .photoViewer__previews {
   width: 100vw;
   height: 12vh;
@@ -917,7 +925,6 @@ main {
   width: 48px;
   height: 48px;
   margin-right: 16px;
-  cursor: pointer;
 }
 
 .photoViewer__preview.selected {
