@@ -76,7 +76,6 @@ function App() {
     "/publicAssets/asset11.jpg",
   ];
 
-
   const AboutUsSectionsArray = ["TRAINED", "ACCREDITED", "WITH DCPI"];
 
   const AboutUsContentArray = [
@@ -206,7 +205,7 @@ function App() {
 
   // UPDATES PHOTOVIEWER INDEX WHEN NEEDED
   useEffect(() => {
-    if (aboutImgIndex.current) photoViewerIndex.current = aboutImgIndex;
+    if (aboutImgIndex.current) photoViewerIndex.current = aboutImgIndex.current;
     if (photoViewerLoaded) {
       const photoViewerImg = new Image();
       photoViewerImg.src = aboutImg;
@@ -220,21 +219,21 @@ function App() {
 
   const nextPhotoViewerImage = () => {
     if (aboutSection === "T") {
-      const photoViewerNextIndex =
-        photoViewerIndex.current + 1 < AboutUsImgs.AboutTrainedImgs.length
-          ? photoViewerIndex.current + 1
-          : 0;
-      photoViewerPreviewsRef.current[photoViewerNextIndex].classList.toggle(
-        "selected"
-      );
-      photoViewerPreviewsRef.current[photoViewerIndex.current].classList.toggle(
-        "selected"
-      );
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[photoViewerNextIndex]);
-      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[photoViewerNextIndex]);
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[photoViewerNextIndex]);
-      aboutImgIndex.current = photoViewerNextIndex;
-      photoViewerIndex.current = photoViewerNextIndex;
+        const photoViewerNextIndex =
+          photoViewerIndex.current + 1 < AboutUsImgs.AboutTrainedImgs.length
+            ? photoViewerIndex.current + 1
+            : 0;
+        photoViewerPreviewsRef.current[photoViewerNextIndex].classList.toggle(
+          "selected"
+        );
+        photoViewerPreviewsRef.current[
+          photoViewerIndex.current
+        ].classList.toggle("selected");
+        setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[photoViewerNextIndex]);
+        setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[photoViewerNextIndex]);
+        setAboutImg(AboutUsImgs.AboutTrainedImgs[photoViewerNextIndex]);
+        aboutImgIndex.current = photoViewerNextIndex;
+        photoViewerIndex.current = photoViewerNextIndex;
     }
   };
 
