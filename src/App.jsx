@@ -76,6 +76,7 @@ function App() {
     "/publicAssets/asset11.jpg",
   ];
 
+
   const AboutUsSectionsArray = ["TRAINED", "ACCREDITED", "WITH DCPI"];
 
   const AboutUsContentArray = [
