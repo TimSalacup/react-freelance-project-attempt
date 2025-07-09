@@ -14,6 +14,7 @@ const Header = ({
   previousImage,
   headerBgRef,
   index,
+  notImplemented,
 }) => {
   const [length, setLength] = useState(0);
 
@@ -102,7 +103,7 @@ const Header = ({
               <button className="header__button--left header__button">
                 VIEW OUR SERVICES
               </button>
-              <button className="header__button--right header__button">
+              <button className="header__button--right header__button" onClick={() => notImplemented()}>
                 LOREM IPSUM DOLOR SIT.
               </button>
             </div>

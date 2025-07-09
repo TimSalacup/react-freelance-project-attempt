@@ -37,7 +37,7 @@ const Layout = ({
   indexAbout,
   aboutImgIndex,
   aboutTrainedImgs,
-
+  notImplemented,
 }) => {
   return (
     <>
@@ -52,6 +52,7 @@ const Layout = ({
         toggleMenu={toggleMenu}
         closeMenuButtonRef={closeMenuButtonRef}
         menuRef={menuRef}
+        notImplemented={notImplemented}
       />
       <main className="moveDown">
         <Header
@@ -60,6 +61,7 @@ const Layout = ({
           previousImage={previousImage}
           headerBgRef={headerBgRef}
           index={indexHeader}
+          notImplemented={notImplemented}
         />
         <AboutUs
           aboutUsSections={aboutUsSections}

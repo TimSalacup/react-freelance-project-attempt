@@ -26,7 +26,7 @@ function App() {
   let endX = useRef(0);
   let diffX = useRef(0);
   let prevActiveAbout = useRef(0);
-  const [aboutImgIndex, setAboutImgIndex] = useState(0);
+  let aboutImgIndex = useRef(0);
   const [prevActiveHeader, setPrevActiveHeader] = useState(0);
   const [bottomNavComponents, setBottomNavComponents] = useState([]);
   const [headerImagesArray, setHeaderImagesArray] = useState([]);
@@ -48,6 +48,7 @@ function App() {
   const [aboutPhoneImg, setAboutPhoneImg] = useState("");
   const [aboutSection, setAboutSection] = useState("T");
   const [photoViewerImg, setPhotoViewerImg] = useState("T");
+  const [photoViewerLoaded, setPhotoViewerLoaded] = useState(false);
 
   const AboutUsImgs = {
     AboutTrainedImgs: [
@@ -121,6 +122,11 @@ function App() {
   if ("scrollRestoration" in window.history) {
     window.history.scrollRestoration = "manual";
   }
+
+  // RUNS IF NOT YET IMPLEMENTED
+  const notImplemented = () => {
+    alert("Not yet implemented");
+  };
 
   // TOGGLES THE VISIBILITY OF THE MENU BUTTONS & MENU
   const toggleMenu = () => {
@@ -197,27 +203,59 @@ function App() {
 
   let photoViewerIndex = useRef(0);
 
-  // UPDATES PHOTOVIEWER INDEX WHEN NEEDED HERE
+  // UPDATES PHOTOVIEWER INDEX WHEN NEEDED
   useEffect(() => {
     if (aboutImgIndex) photoViewerIndex.current = aboutImgIndex;
-  }, [aboutImgIndex, aboutImg]);
+    if (photoViewerLoaded) {
+      const photoViewerImg = new Image();
+      photoViewerImg.src = aboutImg;
+      photoViewerImg.onload = () => {
+        photoViewerImg.width > photoViewerImg.height
+          ? document.querySelector("img").classList.add("horizontal")
+          : document.querySelector("img").classList.remove("horizontal");
+      };
+    }
+  }, [aboutImgIndex, aboutImg, photoViewerLoaded]);
 
-  let photoViewerNextIndex = 0;
   const nextPhotoViewerImage = () => {
     if (aboutSection === "T") {
-        nextIndex + 1 <= photoViewerIndex.current.length
-        ? (nextIndex = photoViewerIndex.current + 1)
-        : (nextIndex = 0);
-      photoViewerPreviewsRef.current[nextIndex].classList.toggle("selected");
+      const photoViewerNextIndex =
+        photoViewerIndex.current + 1 < AboutUsImgs.AboutTrainedImgs.length
+          ? photoViewerIndex.current + 1
+          : 0;
+      photoViewerPreviewsRef.current[photoViewerNextIndex].classList.toggle(
+        "selected"
+      );
       photoViewerPreviewsRef.current[photoViewerIndex.current].classList.toggle(
         "selected"
       );
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[nextIndex]);
-      photoViewerIndex.current++;
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[photoViewerNextIndex]);
+      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[photoViewerNextIndex]);
+      setAboutImg(AboutUsImgs.AboutTrainedImgs[photoViewerNextIndex]);
+      aboutImgIndex.current = photoViewerNextIndex;
+      photoViewerIndex.current = photoViewerNextIndex;
     }
   };
 
-  const previousPhotoViewerImage = () => {};
+  const previousPhotoViewerImage = () => {
+    if (aboutSection === "T") {
+      const photoViewerPreviousIndex =
+        photoViewerIndex.current - 1 < 0
+          ? AboutUsImgs.AboutTrainedImgs.length - 1
+          : photoViewerIndex.current - 1;
+      photoViewerPreviewsRef.current[photoViewerPreviousIndex].classList.toggle(
+        "selected"
+      );
+      photoViewerPreviewsRef.current[photoViewerIndex.current].classList.toggle(
+        "selected"
+      );
+      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[photoViewerPreviousIndex]);
+      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[photoViewerPreviousIndex]);
+      setAboutImg(AboutUsImgs.AboutTrainedImgs[photoViewerPreviousIndex]);
+      aboutImgIndex.current = photoViewerPreviousIndex;
+      photoViewerIndex.current = photoViewerPreviousIndex;
+    }
+  };
 
   // OPENS AND CLOSES THE BOTTOM PART OF THE NAV
   const toggleBottomNav = () => {
@@ -247,7 +285,7 @@ function App() {
       );
   }, [bottomNavComponents]);
 
-  // DETECTS WHEN THE USER PRESSES AND RELEASES (HORIZONTAL SCROLLS)
+  // DETECTS WHEN THE USER PRESSES AND RELEASES (HORIZONTAL SCROLLS) HERE
   const aboutTouchStart = (e) => {
     startX.current = e.touches[0].clientX;
   };
@@ -388,51 +426,36 @@ function App() {
     }
   }, [aboutUsContentImgRefReady]);
 
-  // CHANGES THE TRAINED IMAGES ON THE ABOUT US SECTION HERE
+  // HERE
+  // CHANGES THE TRAINED IMAGES ON THE ABOUT US SECTION
   const nextTrainedImg = () => {
-    if (aboutImgIndex === AboutUsImgs.AboutTrainedImgs.length - 1) {
-      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[0]);
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[0]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[0]);
-      setAboutImgIndex(0);
-      document
-        .querySelector(".scrollGif__icons--about")
-        .classList.add("invisible");
-    } else {
-      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex + 1]);
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex + 1]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex + 1]);
-      setAboutImgIndex(aboutImgIndex + 1);
-      document
-        .querySelector(".scrollGif__icons--about")
-        .classList.add("invisible");
-    }
+    const aboutNextIndex =
+      aboutImgIndex.current + 1 > AboutUsImgs.AboutTrainedImgs.length - 1
+        ? 0
+        : aboutImgIndex.current + 1;
+    setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutNextIndex]);
+    setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutNextIndex]);
+    setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutNextIndex]);
+    aboutImgIndex.current = aboutNextIndex;
+    photoViewerIndex.current = aboutNextIndex;
+    document
+      .querySelector(".scrollGif__icons--about")
+      .classList.add("invisible");
   };
 
   const previousTrainedImg = () => {
-    if (aboutImgIndex === 0) {
-      setAboutImg(
-        AboutUsImgs.AboutTrainedImgs[AboutUsImgs.AboutTrainedImgs.length - 1]
-      );
-      setAboutPhoneImg(
-        AboutUsImgs.AboutTrainedImgs[AboutUsImgs.AboutTrainedImgs.length - 1]
-      );
-      setPhotoViewerImg(
-        AboutUsImgs.AboutTrainedImgs[AboutUsImgs.AboutTrainedImgs.length - 1]
-      );
-      setAboutImgIndex(AboutUsImgs.AboutTrainedImgs.length - 1);
-      document
-        .querySelector(".scrollGif__icons--about")
-        .classList.add("invisible");
-    } else {
-      setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex - 1]);
-      setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex - 1]);
-      setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex - 1]);
-      setAboutImgIndex(aboutImgIndex - 1);
-      document
-        .querySelector(".scrollGif__icons--about")
-        .classList.add("invisible");
-    }
+    const aboutPreviousIndex =
+      aboutImgIndex.current - 1 < 0
+        ? AboutUsImgs.AboutTrainedImgs.length - 1
+        : aboutImgIndex.current - 1;
+    setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutPreviousIndex]);
+    setAboutImg(AboutUsImgs.AboutTrainedImgs[aboutPreviousIndex]);
+    setPhotoViewerImg(AboutUsImgs.AboutTrainedImgs[aboutPreviousIndex]);
+    aboutImgIndex.current = aboutPreviousIndex;
+    photoViewerIndex.current = aboutPreviousIndex;
+    document
+      .querySelector(".scrollGif__icons--about")
+      .classList.add("invisible");
   };
 
   // RUNS WHEN THE PAGE FIRST LOADS:
@@ -442,7 +465,7 @@ function App() {
   // 4) ADDS EVENT LISTENER TO HEADER BG REF
   // 5) LOADS THE "TRAINED" SECTION IMAGES FOR THE PHONE VERSION
   useEffect(() => {
-    setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[aboutImgIndex]);
+    setAboutPhoneImg(AboutUsImgs.AboutTrainedImgs[0]);
     setAboutUsContentPhoneTrainedImgReady(true);
     headerBgRef.current.addEventListener("touchstart", headerTouchStart);
     headerBgRef.current.addEventListener("touchend", headerTouchEnd);
@@ -503,6 +526,7 @@ function App() {
       navBottomLinkContainerRef.current[prevActiveNav.current].classList.toggle(
         "active"
       );
+      setPhotoViewerLoaded(false);
     }, 50);
   };
 
@@ -576,6 +600,7 @@ function App() {
               aboutUsPhoneContentContainer={aboutUsPhoneContentContainer}
               scrollGifIconsRef={scrollGifIconsRef}
               indexHeader={prevActiveHeader}
+              notImplemented={notImplemented}
             />
           }
         />
@@ -588,6 +613,8 @@ function App() {
               photoViewerImg={photoViewerImg}
               previousPhotoViewerImage={previousPhotoViewerImage}
               nextPhotoViewerImage={nextPhotoViewerImage}
+              setPhotoViewerLoaded={setPhotoViewerLoaded}
+              aboutSection={aboutSection}
             />
           }
         />

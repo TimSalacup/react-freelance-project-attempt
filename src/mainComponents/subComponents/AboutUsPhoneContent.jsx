@@ -19,60 +19,58 @@ const AboutUsPhoneContent = ({
 }) => {
   return (
     <>
-      <>
-        <FadeIn>
-          <div className="aboutUsContent__wrapper">
-            <div className="aboutUsContent__left">
-              <h2 className="aboutUsContent__left--title">{title}</h2>
-              <span className="aboutUsContent__left--para">{paragraph}</span>
-            </div>
-
-            <div ref={aboutUsContentImgRef} className="aboutUsContent__right">
-              <img
-                src={img || undefined}
-                alt="About Us Image"
-                className={`aboutUsContent__right--img ${
-                  isHorizontal ? "horizontal" : ""
-                }`}
-              />
-              {section === "T" && (
-                <div
-                  className="header__arrow header__left"
-                  onClick={() => previousTrainedImg()}
-                >
-                  <FontAwesomeIcon
-                    icon={faChevronLeft}
-                    className="header__arrow--left about"
-                  />
-                </div>
-              )}
-              {section === "T" && (
-                <div
-                  className="header__arrow header__right"
-                  onClick={() => nextTrainedImg()}
-                >
-                  <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className="header__arrow--right about"
-                  />
-                </div>
-              )}
-              {section === "T" && (
-                <div className="scrollGif__icons--about">
-                  <FontAwesomeIcon
-                    icon={faMobileScreenButton}
-                    className="scrollGif__icon phone"
-                  />
-                  <FontAwesomeIcon
-                    icon={faHandPointer}
-                    className="scrollGif__icon point"
-                  />
-                </div>
-              )}
-            </div>
+      <FadeIn>
+        <div className="aboutUsContent__wrapper">
+          <div className="aboutUsContent__left">
+            <h2 className="aboutUsContent__left--title">{title}</h2>
+            <span className="aboutUsContent__left--para">{paragraph}</span>
           </div>
-        </FadeIn>
-      </>
+
+          <div ref={aboutUsContentImgRef} className="aboutUsContent__right">
+            <img
+              src={img || undefined}
+              alt="About Us Image"
+              className={`aboutUsContent__right--img ${
+                isHorizontal ? "horizontal" : ""
+              }`}
+            />
+            {section === "T" && (
+              <div
+                className="header__arrow header__left"
+                onClick={() => previousTrainedImg()}
+              >
+                <FontAwesomeIcon
+                  icon={faChevronLeft}
+                  className="header__arrow--left about"
+                />
+              </div>
+            )}
+            {section === "T" && (
+              <div
+                className="header__arrow header__right"
+                onClick={() => nextTrainedImg()}
+              >
+                <FontAwesomeIcon
+                  icon={faChevronRight}
+                  className="header__arrow--right about"
+                />
+              </div>
+            )}
+            {section === "T" && (
+              <div className="scrollGif__icons--about">
+                <FontAwesomeIcon
+                  icon={faMobileScreenButton}
+                  className="scrollGif__icon phone"
+                />
+                <FontAwesomeIcon
+                  icon={faHandPointer}
+                  className="scrollGif__icon point"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </FadeIn>
     </>
   );
 };

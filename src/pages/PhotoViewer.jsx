@@ -1,5 +1,10 @@
-import { faChevronLeft, faChevronRight, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faChevronRight,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const PhotoViewer = ({
@@ -8,7 +13,12 @@ const PhotoViewer = ({
   photoViewerImg,
   previousPhotoViewerImage,
   nextPhotoViewerImage,
+  setPhotoViewerLoaded,
+  aboutSection,
 }) => {
+  useEffect(() => {
+    if (photoViewerImg) setPhotoViewerLoaded(true);
+  }, []);
   return (
     <>
       <div className="photoViewer">
@@ -23,24 +33,32 @@ const PhotoViewer = ({
           />
         </div>
         <div className="photoViewer__previews">{photoViewerPreviews}</div>
-        <div
-          className="header__arrow header__left"
-          onClick={() => previousPhotoViewerImage()}
-        >
-          <FontAwesomeIcon
-            icon={faChevronLeft}
-            className="photoViewer__arrow--left"
-          />
-        </div>
-        <div
-          className="header__arrow header__right"
-          onClick={() => nextPhotoViewerImage()}
-        >
-          <FontAwesomeIcon
-            icon={faChevronRight}
-            className="photoViewer__arrow--right"
-          />
-        </div>
+        {aboutSection === "T" && (
+          <>
+            <div
+              className="header__arrow header__left"
+              onClick={() => previousPhotoViewerImage()}
+            >
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                className="photoViewer__arrow--left"
+              />
+            </div>
+          </>
+        )}
+        {aboutSection === "T" && (
+          <>
+            <div
+              className="header__arrow header__right"
+              onClick={() => nextPhotoViewerImage()}
+            >
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className="photoViewer__arrow--right"
+              />
+            </div>
+          </>
+        )}
       </div>
     </>
   );

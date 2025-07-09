@@ -19,6 +19,7 @@ const Nav = ({
   toggleMenu,
   closeMenuButtonRef,
   menuRef,
+  notImplemented
 }) => {
   const phoneIcon = (
     <FontAwesomeIcon icon={faPhone} className="nav__top--icon" />
@@ -79,15 +80,15 @@ const Nav = ({
             <li className="menu__link">
               <span className="menu__link--href">Message us</span>
             </li>
-            <li className="menu__link">
+            <li className="menu__link" onClick={() => notImplemented()}>
               <span className="menu__link--href">
                 Link 2
               </span>
             </li>
-            <li className="menu__link">
+            <li className="menu__link" onClick={() => notImplemented()}>
               <span className="menu__link--href">Link 3 </span>
             </li>
-            <li className="menu__link">
+            <li className="menu__link" onClick={() => notImplemented()}>
               <span className="menu__link--href">Link 4</span>
             </li>
           </ul>
