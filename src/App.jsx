@@ -295,7 +295,7 @@ function App() {
     diffX.current = Math.ceil(startX.current - endX.current);
     if (diffX.current > 20) {
       nextTrainedImg();
-    } else if (diffX.current < -20) {
+    } else if (diffX.current < -5) {
       previousTrainedImg();
     }
   };
@@ -310,7 +310,7 @@ function App() {
     diffX.current = Math.ceil(startX.current - endX.current);
     if (diffX.current > 20) {
       nextImage();
-    } else if (diffX.current < -20) {
+    } else if (diffX.current < -5) {
       previousImage();
     }
   };
