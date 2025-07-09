@@ -1538,6 +1538,10 @@ main {
 
 @media (max-width: 420px) {
 
+  .service {
+    width: 100%;
+  }
+
   .header__content--buttons {
     flex-direction: column;
   }

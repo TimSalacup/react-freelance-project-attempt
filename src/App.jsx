@@ -98,7 +98,7 @@ function App() {
           <br />~ Mr. Tomas Julius G. Salacup, CVS Board Member
         </>
       ),
-      img: AboutUsImgs.AboutTrainedImgs[aboutImgIndex],
+      img: AboutUsImgs.AboutTrainedImgs[aboutImgIndex.current],
       horizontal: false,
     },
     {
@@ -164,7 +164,7 @@ function App() {
   const mapPhotoViewerPreviews = () => {
     if (aboutSection === "T") {
       currentAbout = AboutUsImgs.AboutTrainedImgs;
-      setPhotoViewerImg(currentAbout[aboutImgIndex]);
+      setPhotoViewerImg(currentAbout[aboutImgIndex.current]);
     } else if (aboutSection === "A") {
       currentAbout = AboutUsImgs.AboutAccredImgs;
       setPhotoViewerImg(currentAbout[0]);
@@ -193,7 +193,7 @@ function App() {
     );
     setTimeout(() => {
       if (aboutSection === "T")
-        photoViewerPreviewsRef.current[aboutImgIndex].classList.toggle(
+        photoViewerPreviewsRef.current[aboutImgIndex.current].classList.toggle(
           "selected"
         );
       else {
@@ -206,7 +206,7 @@ function App() {
 
   // UPDATES PHOTOVIEWER INDEX WHEN NEEDED
   useEffect(() => {
-    if (aboutImgIndex) photoViewerIndex.current = aboutImgIndex;
+    if (aboutImgIndex.current) photoViewerIndex.current = aboutImgIndex;
     if (photoViewerLoaded) {
       const photoViewerImg = new Image();
       photoViewerImg.src = aboutImg;
@@ -590,7 +590,7 @@ function App() {
               previousTrainedImg={previousTrainedImg}
               nextTrainedImg={nextTrainedImg}
               aboutTrainedImgs={AboutUsImgs.AboutTrainedImgs}
-              aboutImgIndex={aboutImgIndex}
+              aboutImgIndex={aboutImgIndex.current}
               mapPhotoViewerPreviews={mapPhotoViewerPreviews}
               menuButtonRef={menuButtonRef}
               toggleMenu={toggleMenu}
