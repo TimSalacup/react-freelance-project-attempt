@@ -27,7 +27,7 @@ const Footer = () => {
               </Link>
             </li>
             <li className="footer__link">
-              <Link to="/" className="footer__link--href">
+              <Link to="/#header" className="footer__link--href">
                 Back to top
               </Link>
             </li>
