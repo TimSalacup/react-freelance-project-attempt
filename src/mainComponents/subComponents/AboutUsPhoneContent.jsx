@@ -20,7 +20,7 @@ const AboutUsPhoneContent = ({
   return (
     <>
       <FadeIn>
-        <div className="aboutUsContent__wrapper">
+        <div className="aboutUsContent__wrapper" >
           <div className="aboutUsContent__left">
             <h2 className="aboutUsContent__left--title">{title}</h2>
             <span className="aboutUsContent__left--para">{paragraph}</span>
