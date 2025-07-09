@@ -310,7 +310,7 @@ function App() {
     diffX.current = Math.ceil(startX.current - endX.current);
     if (diffX.current > 20) {
       nextImage();
-    } else if (diffX.current < 0) {
+    } else if (diffX.current < 20) {
       previousImage();
     }
   };
