@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PhotoCircles from "./subComponents/PhotoCircles";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = ({
   headerImagesArray,
@@ -100,9 +101,9 @@ const Header = ({
               </div>
             </div>
             <div className="header__content--buttons">
-              <button className="header__button--left header__button">
+              <Link to="/#services" className="header__button--left header__button">
                 VIEW OUR SERVICES
-              </button>
+              </Link>
               <button className="header__button--right header__button" onClick={() => notImplemented()}>
                 LOREM IPSUM DOLOR SIT.
               </button>
