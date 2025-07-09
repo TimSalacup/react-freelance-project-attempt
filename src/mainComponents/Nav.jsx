@@ -78,7 +78,7 @@ const Nav = ({
         <div ref={menuRef} className="menu">
           <ul className="menu__links--list">
             <li className="menu__link">
-              <span className="menu__link--href">Message us</span>
+              <a href="https://m.me/cvsph.sjdm" target="_blank" className="menu__link--href">Message us</span>
             </li>
             <li className="menu__link" onClick={() => notImplemented()}>
               <span className="menu__link--href">

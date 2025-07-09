@@ -293,9 +293,9 @@ function App() {
   const aboutTouchEnd = (e) => {
     endX.current = e.changedTouches[0].clientX;
     diffX.current = Math.ceil(startX.current - endX.current);
-    if (diffX.current > 30) {
+    if (diffX.current > 20) {
       nextTrainedImg();
-    } else if (diffX.current < -60) {
+    } else if (diffX.current < -20) {
       previousTrainedImg();
     }
   };
@@ -308,9 +308,9 @@ function App() {
   const headerTouchEnd = (e) => {
     endX.current = e.changedTouches[0].clientX;
     diffX.current = Math.ceil(startX.current - endX.current);
-    if (diffX.current > 30) {
+    if (diffX.current > 20) {
       nextImage();
-    } else if (diffX.current < -60) {
+    } else if (diffX.current < -20) {
       previousImage();
     }
   };
