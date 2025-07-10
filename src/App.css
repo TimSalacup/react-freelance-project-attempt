@@ -2,7 +2,7 @@
 
 * {
   font-family: "Lato", sans-serif;
-  /* color: rgb(59, 59, 59); */
+  -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -569,6 +569,7 @@ header {
   top: 85%;
   left: 50%;
   transform: translateX(-50%);
+  height: 20px;
 }
 
 .photoCircles__wrapper>:last-child {
@@ -1456,6 +1457,10 @@ main {
   .header__bg--img {
     height: 100%;
     width: auto;
+  }
+
+  .scrollGif__icon.phone, .scrollGif__icon.point {
+  font-size: 24px;
   }
 
   .footer__img {
